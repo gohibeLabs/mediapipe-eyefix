@@ -1,0 +1,224 @@
+{
+    "BlendShapes": [
+        {
+            "Index": 0,
+            "Name": "ArKit_Lower_Teeth.jawForward"
+        },
+        {
+            "Index": 1,
+            "Name": "ArKit_Lower_Teeth.jawLeft"
+        },
+        {
+            "Index": 2,
+            "Name": "ArKit_Lower_Teeth.jawRight"
+        },
+        {
+            "Index": 3,
+            "Name": "ArKit_Lower_Teeth.jawOpen"
+        },
+        {
+            "Index": 4,
+            "Name": "ArKit_Lower_Teeth.mouthClose"
+        },
+        {
+            "Index": 5,
+            "Name": "ArKit_Lower_Teeth.mouthFunnel"
+        },
+        {
+            "Index": 6,
+            "Name": "ArKit_Lower_Teeth.mouthPucker"
+        },
+        {
+            "Index": 7,
+            "Name": "ArKit_Lower_Teeth.mouthLeft"
+        },
+        {
+            "Index": 8,
+            "Name": "ArKit_Lower_Teeth.mouthRight"
+        },
+        {
+            "Index": 9,
+            "Name": "ArKit_Lower_Teeth.mouthSmileLeft"
+        },
+        {
+            "Index": 10,
+            "Name": "ArKit_Lower_Teeth.mouthSmileRight"
+        },
+        {
+            "Index": 11,
+            "Name": "ArKit_Lower_Teeth.mouthFrownLeft"
+        },
+        {
+            "Index": 12,
+            "Name": "ArKit_Lower_Teeth.mouthFrownRight"
+        },
+        {
+            "Index": 13,
+            "Name": "ArKit_Lower_Teeth.mouthDimpleLeft"
+        },
+        {
+            "Index": 14,
+            "Name": "ArKit_Lower_Teeth.mouthDimpleRight"
+        },
+        {
+            "Index": 15,
+            "Name": "ArKit_Lower_Teeth.mouthStretchLeft"
+        },
+        {
+            "Index": 16,
+            "Name": "ArKit_Lower_Teeth.mouthStretchRight"
+        },
+        {
+            "Index": 17,
+            "Name": "ArKit_Lower_Teeth.mouthRollLower"
+        },
+        {
+            "Index": 18,
+            "Name": "ArKit_Lower_Teeth.mouthRollUpper"
+        },
+        {
+            "Index": 19,
+            "Name": "ArKit_Lower_Teeth.mouthShrugLower"
+        },
+        {
+            "Index": 20,
+            "Name": "ArKit_Lower_Teeth.mouthShrugUpper"
+        },
+        {
+            "Index": 21,
+            "Name": "ArKit_Lower_Teeth.mouthPressLeft"
+        },
+        {
+            "Index": 22,
+            "Name": "ArKit_Lower_Teeth.mouthPressRight"
+        },
+        {
+            "Index": 23,
+            "Name": "ArKit_Lower_Teeth.mouthLowerDownLeft"
+        },
+        {
+            "Index": 24,
+            "Name": "ArKit_Lower_Teeth.mouthLowerDownRight"
+        },
+        {
+            "Index": 25,
+            "Name": "ArKit_Lower_Teeth.mouthUpperUpLeft"
+        },
+        {
+            "Index": 26,
+            "Name": "ArKit_Lower_Teeth.mouthUpperUpRight"
+        },
+        {
+            "Index": 27,
+            "Name": "ArKit_Lower_Teeth.eyeBlinkLeft"
+        },
+        {
+            "Index": 28,
+            "Name": "ArKit_Lower_Teeth.eyeLookDownLeft"
+        },
+        {
+            "Index": 29,
+            "Name": "ArKit_Lower_Teeth.eyeLookInLeft"
+        },
+        {
+            "Index": 30,
+            "Name": "ArKit_Lower_Teeth.eyeLookOutLeft"
+        },
+        {
+            "Index": 31,
+            "Name": "ArKit_Lower_Teeth.eyeLookUpLeft"
+        },
+        {
+            "Index": 32,
+            "Name": "ArKit_Lower_Teeth.eyeSquintLeft"
+        },
+        {
+            "Index": 33,
+            "Name": "ArKit_Lower_Teeth.eyeWideLeft"
+        },
+        {
+            "Index": 34,
+            "Name": "ArKit_Lower_Teeth.eyeBlinkRight"
+        },
+        {
+            "Index": 35,
+            "Name": "ArKit_Lower_Teeth.eyeLookDownRight"
+        },
+        {
+            "Index": 36,
+            "Name": "ArKit_Lower_Teeth.eyeLookInRight"
+        },
+        {
+            "Index": 37,
+            "Name": "ArKit_Lower_Teeth.eyeLookOutRight"
+        },
+        {
+            "Index": 38,
+            "Name": "ArKit_Lower_Teeth.eyeLookUpRight"
+        },
+        {
+            "Index": 39,
+            "Name": "ArKit_Lower_Teeth.eyeSquintRight"
+        },
+        {
+            "Index": 40,
+            "Name": "ArKit_Lower_Teeth.eyeWideRight"
+        },
+        {
+            "Index": 41,
+            "Name": "ArKit_Lower_Teeth.browDownLeft"
+        },
+        {
+            "Index": 42,
+            "Name": "ArKit_Lower_Teeth.browDownRight"
+        },
+        {
+            "Index": 43,
+            "Name": "ArKit_Lower_Teeth.browInnerUp"
+        },
+        {
+            "Index": 44,
+            "Name": "ArKit_Lower_Teeth.browOuterUpLeft"
+        },
+        {
+            "Index": 45,
+            "Name": "ArKit_Lower_Teeth.browOuterUpRight"
+        },
+        {
+            "Index": 46,
+            "Name": "ArKit_Lower_Teeth.cheekPuff"
+        },
+        {
+            "Index": 47,
+            "Name": "ArKit_Lower_Teeth.cheekSquintLeft"
+        },
+        {
+            "Index": 48,
+            "Name": "ArKit_Lower_Teeth.cheekSquintRight"
+        },
+        {
+            "Index": 49,
+            "Name": "ArKit_Lower_Teeth.noseSneerLeft"
+        },
+        {
+            "Index": 50,
+            "Name": "ArKit_Lower_Teeth.noseSneerRight"
+        },
+        {
+            "Index": 51,
+            "Name": "ArKit_Lower_Teeth.tongueOut"
+        },
+        {
+            "Index": 52,
+            "Name": "Lower_Teeth_BS_HI.Lower_Lip_HI"
+        },
+        {
+            "Index": 53,
+            "Name": "Lower_Teeth_BS_HI.Teeth_Shape"
+        },
+        {
+            "Index": 54,
+            "Name": "Lower_Teeth_BS_HI.Deku_Lower_Teeth"
+        }
+    ]
+}

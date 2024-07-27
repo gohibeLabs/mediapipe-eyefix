@@ -1,0 +1,448 @@
+{
+    "BlendShapes": [
+        {
+            "Index": 0,
+            "Name": "ArKit_Eyelash.jawForward"
+        },
+        {
+            "Index": 1,
+            "Name": "ArKit_Eyelash.jawLeft"
+        },
+        {
+            "Index": 2,
+            "Name": "ArKit_Eyelash.jawRight"
+        },
+        {
+            "Index": 3,
+            "Name": "ArKit_Eyelash.jawOpen"
+        },
+        {
+            "Index": 4,
+            "Name": "ArKit_Eyelash.mouthClose"
+        },
+        {
+            "Index": 5,
+            "Name": "ArKit_Eyelash.mouthFunnel"
+        },
+        {
+            "Index": 6,
+            "Name": "ArKit_Eyelash.mouthPucker"
+        },
+        {
+            "Index": 7,
+            "Name": "ArKit_Eyelash.mouthLeft"
+        },
+        {
+            "Index": 8,
+            "Name": "ArKit_Eyelash.mouthRight"
+        },
+        {
+            "Index": 9,
+            "Name": "ArKit_Eyelash.mouthSmileLeft"
+        },
+        {
+            "Index": 10,
+            "Name": "ArKit_Eyelash.mouthSmileRight"
+        },
+        {
+            "Index": 11,
+            "Name": "ArKit_Eyelash.mouthFrownLeft"
+        },
+        {
+            "Index": 12,
+            "Name": "ArKit_Eyelash.mouthFrownRight"
+        },
+        {
+            "Index": 13,
+            "Name": "ArKit_Eyelash.mouthDimpleLeft"
+        },
+        {
+            "Index": 14,
+            "Name": "ArKit_Eyelash.mouthDimpleRight"
+        },
+        {
+            "Index": 15,
+            "Name": "ArKit_Eyelash.mouthStretchLeft"
+        },
+        {
+            "Index": 16,
+            "Name": "ArKit_Eyelash.mouthStretchRight"
+        },
+        {
+            "Index": 17,
+            "Name": "ArKit_Eyelash.mouthRollLower"
+        },
+        {
+            "Index": 18,
+            "Name": "ArKit_Eyelash.mouthRollUpper"
+        },
+        {
+            "Index": 19,
+            "Name": "ArKit_Eyelash.mouthShrugLower"
+        },
+        {
+            "Index": 20,
+            "Name": "ArKit_Eyelash.mouthShrugUpper"
+        },
+        {
+            "Index": 21,
+            "Name": "ArKit_Eyelash.mouthPressLeft"
+        },
+        {
+            "Index": 22,
+            "Name": "ArKit_Eyelash.mouthPressRight"
+        },
+        {
+            "Index": 23,
+            "Name": "ArKit_Eyelash.mouthLowerDownLeft"
+        },
+        {
+            "Index": 24,
+            "Name": "ArKit_Eyelash.mouthLowerDownRight"
+        },
+        {
+            "Index": 25,
+            "Name": "ArKit_Eyelash.mouthUpperUpLeft"
+        },
+        {
+            "Index": 26,
+            "Name": "ArKit_Eyelash.mouthUpperUpRight"
+        },
+        {
+            "Index": 27,
+            "Name": "ArKit_Eyelash.eyeBlinkLeft"
+        },
+        {
+            "Index": 28,
+            "Name": "ArKit_Eyelash.eyeLookDownLeft"
+        },
+        {
+            "Index": 29,
+            "Name": "ArKit_Eyelash.eyeLookInLeft"
+        },
+        {
+            "Index": 30,
+            "Name": "ArKit_Eyelash.eyeLookOutLeft"
+        },
+        {
+            "Index": 31,
+            "Name": "ArKit_Eyelash.eyeLookUpLeft"
+        },
+        {
+            "Index": 32,
+            "Name": "ArKit_Eyelash.eyeSquintLeft"
+        },
+        {
+            "Index": 33,
+            "Name": "ArKit_Eyelash.eyeWideLeft"
+        },
+        {
+            "Index": 34,
+            "Name": "ArKit_Eyelash.eyeBlinkRight"
+        },
+        {
+            "Index": 35,
+            "Name": "ArKit_Eyelash.eyeLookDownRight"
+        },
+        {
+            "Index": 36,
+            "Name": "ArKit_Eyelash.eyeLookInRight"
+        },
+        {
+            "Index": 37,
+            "Name": "ArKit_Eyelash.eyeLookOutRight"
+        },
+        {
+            "Index": 38,
+            "Name": "ArKit_Eyelash.eyeLookUpRight"
+        },
+        {
+            "Index": 39,
+            "Name": "ArKit_Eyelash.eyeSquintRight"
+        },
+        {
+            "Index": 40,
+            "Name": "ArKit_Eyelash.eyeWideRight"
+        },
+        {
+            "Index": 41,
+            "Name": "ArKit_Eyelash.browDownLeft"
+        },
+        {
+            "Index": 42,
+            "Name": "ArKit_Eyelash.browDownRight"
+        },
+        {
+            "Index": 43,
+            "Name": "ArKit_Eyelash.browInnerUp"
+        },
+        {
+            "Index": 44,
+            "Name": "ArKit_Eyelash.browOuterUpLeft"
+        },
+        {
+            "Index": 45,
+            "Name": "ArKit_Eyelash.browOuterUpRight"
+        },
+        {
+            "Index": 46,
+            "Name": "ArKit_Eyelash.cheekPuff"
+        },
+        {
+            "Index": 47,
+            "Name": "ArKit_Eyelash.cheekSquintLeft"
+        },
+        {
+            "Index": 48,
+            "Name": "ArKit_Eyelash.cheekSquintRight"
+        },
+        {
+            "Index": 49,
+            "Name": "ArKit_Eyelash.noseSneerLeft"
+        },
+        {
+            "Index": 50,
+            "Name": "ArKit_Eyelash.noseSneerRight"
+        },
+        {
+            "Index": 51,
+            "Name": "ArKit_Eyelash.tongueOut"
+        },
+        {
+            "Index": 52,
+            "Name": "Eyelash_BS_HI.Lattino_Female_Eyelashes_HI"
+        },
+        {
+            "Index": 53,
+            "Name": "Eyelash_BS_HI.Asian_Female_Eyelashes_HI"
+        },
+        {
+            "Index": 54,
+            "Name": "Eyelash_BS_HI.African_Female_Eyelashes_HI"
+        },
+        {
+            "Index": 55,
+            "Name": "Eyelash_BS_HI.Asian_Male_Eyelashes_HI"
+        },
+        {
+            "Index": 56,
+            "Name": "Eyelash_BS_HI.African_Male_Eyelashes_HI"
+        },
+        {
+            "Index": 57,
+            "Name": "Eyelash_BS_HI.Caucasian_Male_Eyelashes_HI"
+        },
+        {
+            "Index": 58,
+            "Name": "Eyelash_BS_HI.RT_eye_outer_corner_down_HI"
+        },
+        {
+            "Index": 59,
+            "Name": "Eyelash_BS_HI.RT_upper_eye_open_HI"
+        },
+        {
+            "Index": 60,
+            "Name": "Eyelash_BS_HI.RT_lower_eye_open_HI"
+        },
+        {
+            "Index": 61,
+            "Name": "Eyelash_BS_HI.RT_upper_eye_close_HI"
+        },
+        {
+            "Index": 62,
+            "Name": "Eyelash_BS_HI.RT_lower_eye_close_HI"
+        },
+        {
+            "Index": 63,
+            "Name": "Eyelash_BS_HI.RT_eye_inner_corner_up_HI"
+        },
+        {
+            "Index": 64,
+            "Name": "Eyelash_BS_HI.LT_eye_outer_corner_down_HI"
+        },
+        {
+            "Index": 65,
+            "Name": "Eyelash_BS_HI.LT_upper_eye_open_HI"
+        },
+        {
+            "Index": 66,
+            "Name": "Eyelash_BS_HI.LT_lower_eye_open_HI"
+        },
+        {
+            "Index": 67,
+            "Name": "Eyelash_BS_HI.LT_upper_eye_close_HI"
+        },
+        {
+            "Index": 68,
+            "Name": "Eyelash_BS_HI.LT_lower_eye_close_HI"
+        },
+        {
+            "Index": 69,
+            "Name": "Eyelash_BS_HI.LT_eye_inner_corner_up_HI"
+        },
+        {
+            "Index": 70,
+            "Name": "Eyelash_BS_HI.RT_UP_Eye_Eyelashes_HI"
+        },
+        {
+            "Index": 71,
+            "Name": "Eyelash_BS_HI.LT_UP_Eye_Eyelashes_HI"
+        },
+        {
+            "Index": 72,
+            "Name": "Eyelash_BS_HI.LT_Dn_Eye_Eyelashes_HI"
+        },
+        {
+            "Index": 73,
+            "Name": "Eyelash_BS_HI.RT_Dn_Eye_Eyelashes_HI"
+        },
+        {
+            "Index": 74,
+            "Name": "Eyelash_BS_HI.LT_Eyelash_Big_Round_R_HI"
+        },
+        {
+            "Index": 75,
+            "Name": "Eyelash_BS_HI.LT_Eyelash_Big_Round_L_HI"
+        },
+        {
+            "Index": 76,
+            "Name": "Eyelash_BS_HI.LT_Eyelash_Small_Round_R_HI"
+        },
+        {
+            "Index": 77,
+            "Name": "Eyelash_BS_HI.LT_Eyelash_Small_Round_L_HI"
+        },
+        {
+            "Index": 78,
+            "Name": "Eyelash_BS_HI.RT_Eyelash_Big_Round_R_HI"
+        },
+        {
+            "Index": 79,
+            "Name": "Eyelash_BS_HI.RT_Eyelash_Big_Round_L_HI"
+        },
+        {
+            "Index": 80,
+            "Name": "Eyelash_BS_HI.RT_Eyelash_Small_Round_R_HI"
+        },
+        {
+            "Index": 81,
+            "Name": "Eyelash_BS_HI.RT_Eyelash_Small_Round_L_HI"
+        },
+        {
+            "Index": 82,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_Reze"
+        },
+        {
+            "Index": 83,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_Garou"
+        },
+        {
+            "Index": 84,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_Law"
+        },
+        {
+            "Index": 85,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_Deku"
+        },
+        {
+            "Index": 86,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_Nezuko"
+        },
+        {
+            "Index": 87,
+            "Name": "Eyelash_BS_HI.Hi_Eyelashes_SJW"
+        },
+        {
+            "Index": 88,
+            "Name": "Eyelash_BS_HI.Lower_Lash_01"
+        },
+        {
+            "Index": 89,
+            "Name": "Eyelash_BS_HI.Lower_Lash_02"
+        },
+        {
+            "Index": 90,
+            "Name": "Eyelash_BS_HI.Upper_Lash_01"
+        },
+        {
+            "Index": 91,
+            "Name": "Eyelash_BS_HI.Upper_Lash_02"
+        },
+        {
+            "Index": 92,
+            "Name": "Eyelash_BS_HI.Corner_Lash"
+        },
+        {
+            "Index": 93,
+            "Name": "Eyelash_BS_HI.Lashshape_Triangle"
+        },
+        {
+            "Index": 94,
+            "Name": "Eyelash_BS_HI.Lashshape_Round_01"
+        },
+        {
+            "Index": 95,
+            "Name": "Eyelash_BS_HI.Lashshape_Round_02"
+        },
+        {
+            "Index": 96,
+            "Name": "Eyelash_BS_HI.Lashshape_Upturned"
+        },
+        {
+            "Index": 97,
+            "Name": "Eyelash_BS_HI.Lashshape_Downturned"
+        },
+        {
+            "Index": 98,
+            "Name": "Eyelash_BS_HI.Lashshape_Almond_01"
+        },
+        {
+            "Index": 99,
+            "Name": "Eyelash_BS_HI.Lashshape_Almond_02"
+        },
+        {
+            "Index": 100,
+            "Name": "Eyelash_BS_HI.Honkai"
+        },
+        {
+            "Index": 101,
+            "Name": "Eyelash_BS_HI.Pokemon"
+        },
+        {
+            "Index": 102,
+            "Name": "Eyelash_BS_HI.CC_Sakura"
+        },
+        {
+            "Index": 103,
+            "Name": "Eyelash_BS_HI.Dandere_Female"
+        },
+        {
+            "Index": 104,
+            "Name": "Eyelash_BS_HI.Dandere_male"
+        },
+        {
+            "Index": 105,
+            "Name": "Eyelash_BS_HI.Kundere_female"
+        },
+        {
+            "Index": 106,
+            "Name": "Eyelash_BS_HI.Tsundere_female"
+        },
+        {
+            "Index": 107,
+            "Name": "Eyelash_BS_HI.Tsundere_male"
+        },
+        {
+            "Index": 108,
+            "Name": "Eyelash_BS_HI.Deredere_Female"
+        },
+        {
+            "Index": 109,
+            "Name": "Eyelash_BS_HI.Kundere_male"
+        },
+        {
+            "Index": 110,
+            "Name": "Eyelash_BS_HI.Deredere_Male"
+        }
+    ]
+}

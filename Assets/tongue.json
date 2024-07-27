@@ -1,0 +1,256 @@
+{
+    "BlendShapes": [
+        {
+            "Index": 0,
+            "Name": "ArKit_Tongue.jawForward"
+        },
+        {
+            "Index": 1,
+            "Name": "ArKit_Tongue.jawLeft"
+        },
+        {
+            "Index": 2,
+            "Name": "ArKit_Tongue.jawRight"
+        },
+        {
+            "Index": 3,
+            "Name": "ArKit_Tongue.jawOpen"
+        },
+        {
+            "Index": 4,
+            "Name": "ArKit_Tongue.mouthClose"
+        },
+        {
+            "Index": 5,
+            "Name": "ArKit_Tongue.mouthFunnel"
+        },
+        {
+            "Index": 6,
+            "Name": "ArKit_Tongue.mouthPucker"
+        },
+        {
+            "Index": 7,
+            "Name": "ArKit_Tongue.mouthLeft"
+        },
+        {
+            "Index": 8,
+            "Name": "ArKit_Tongue.mouthRight"
+        },
+        {
+            "Index": 9,
+            "Name": "ArKit_Tongue.mouthSmileLeft"
+        },
+        {
+            "Index": 10,
+            "Name": "ArKit_Tongue.mouthSmileRight"
+        },
+        {
+            "Index": 11,
+            "Name": "ArKit_Tongue.mouthFrownLeft"
+        },
+        {
+            "Index": 12,
+            "Name": "ArKit_Tongue.mouthFrownRight"
+        },
+        {
+            "Index": 13,
+            "Name": "ArKit_Tongue.mouthDimpleLeft"
+        },
+        {
+            "Index": 14,
+            "Name": "ArKit_Tongue.mouthDimpleRight"
+        },
+        {
+            "Index": 15,
+            "Name": "ArKit_Tongue.mouthStretchLeft"
+        },
+        {
+            "Index": 16,
+            "Name": "ArKit_Tongue.mouthStretchRight"
+        },
+        {
+            "Index": 17,
+            "Name": "ArKit_Tongue.mouthRollLower"
+        },
+        {
+            "Index": 18,
+            "Name": "ArKit_Tongue.mouthRollUpper"
+        },
+        {
+            "Index": 19,
+            "Name": "ArKit_Tongue.mouthShrugLower"
+        },
+        {
+            "Index": 20,
+            "Name": "ArKit_Tongue.mouthShrugUpper"
+        },
+        {
+            "Index": 21,
+            "Name": "ArKit_Tongue.mouthPressLeft"
+        },
+        {
+            "Index": 22,
+            "Name": "ArKit_Tongue.mouthPressRight"
+        },
+        {
+            "Index": 23,
+            "Name": "ArKit_Tongue.mouthLowerDownLeft"
+        },
+        {
+            "Index": 24,
+            "Name": "ArKit_Tongue.mouthLowerDownRight"
+        },
+        {
+            "Index": 25,
+            "Name": "ArKit_Tongue.mouthUpperUpLeft"
+        },
+        {
+            "Index": 26,
+            "Name": "ArKit_Tongue.mouthUpperUpRight"
+        },
+        {
+            "Index": 27,
+            "Name": "ArKit_Tongue.eyeBlinkLeft"
+        },
+        {
+            "Index": 28,
+            "Name": "ArKit_Tongue.eyeLookDownLeft"
+        },
+        {
+            "Index": 29,
+            "Name": "ArKit_Tongue.eyeLookInLeft"
+        },
+        {
+            "Index": 30,
+            "Name": "ArKit_Tongue.eyeLookOutLeft"
+        },
+        {
+            "Index": 31,
+            "Name": "ArKit_Tongue.eyeLookUpLeft"
+        },
+        {
+            "Index": 32,
+            "Name": "ArKit_Tongue.eyeSquintLeft"
+        },
+        {
+            "Index": 33,
+            "Name": "ArKit_Tongue.eyeWideLeft"
+        },
+        {
+            "Index": 34,
+            "Name": "ArKit_Tongue.eyeBlinkRight"
+        },
+        {
+            "Index": 35,
+            "Name": "ArKit_Tongue.eyeLookDownRight"
+        },
+        {
+            "Index": 36,
+            "Name": "ArKit_Tongue.eyeLookInRight"
+        },
+        {
+            "Index": 37,
+            "Name": "ArKit_Tongue.eyeLookOutRight"
+        },
+        {
+            "Index": 38,
+            "Name": "ArKit_Tongue.eyeLookUpRight"
+        },
+        {
+            "Index": 39,
+            "Name": "ArKit_Tongue.eyeSquintRight"
+        },
+        {
+            "Index": 40,
+            "Name": "ArKit_Tongue.eyeWideRight"
+        },
+        {
+            "Index": 41,
+            "Name": "ArKit_Tongue.browDownLeft"
+        },
+        {
+            "Index": 42,
+            "Name": "ArKit_Tongue.browDownRight"
+        },
+        {
+            "Index": 43,
+            "Name": "ArKit_Tongue.browInnerUp"
+        },
+        {
+            "Index": 44,
+            "Name": "ArKit_Tongue.browOuterUpLeft"
+        },
+        {
+            "Index": 45,
+            "Name": "ArKit_Tongue.browOuterUpRight"
+        },
+        {
+            "Index": 46,
+            "Name": "ArKit_Tongue.cheekPuff"
+        },
+        {
+            "Index": 47,
+            "Name": "ArKit_Tongue.cheekSquintLeft"
+        },
+        {
+            "Index": 48,
+            "Name": "ArKit_Tongue.cheekSquintRight"
+        },
+        {
+            "Index": 49,
+            "Name": "ArKit_Tongue.noseSneerLeft"
+        },
+        {
+            "Index": 50,
+            "Name": "ArKit_Tongue.noseSneerRight"
+        },
+        {
+            "Index": 51,
+            "Name": "ArKit_Tongue.tongueOut"
+        },
+        {
+            "Index": 52,
+            "Name": "Tongue_BS_HI.Lower_Lip_Tongue_HI"
+        },
+        {
+            "Index": 53,
+            "Name": "Tongue_BS_HI.Tounge_Streatch_HI"
+        },
+        {
+            "Index": 54,
+            "Name": "Tongue_BS_HI.Tounge_Center_Down_HI"
+        },
+        {
+            "Index": 55,
+            "Name": "Tongue_BS_HI.Tounge_Center_Up_HI"
+        },
+        {
+            "Index": 56,
+            "Name": "Tongue_BS_HI.Tounge_Tip_Down_HI"
+        },
+        {
+            "Index": 57,
+            "Name": "Tongue_BS_HI.Tounge_Tip_Up_HI"
+        },
+        {
+            "Index": 58,
+            "Name": "Tongue_BS_HI.LT_Tounge_Rotate_HI"
+        },
+        {
+            "Index": 59,
+            "Name": "Tongue_BS_HI.RT_Tounge_Rotate_HI"
+        },
+        {
+            "Index": 60,
+            "Name": "Tongue_BS_HI.Tounge_Twist_R_HI"
+        },
+        {
+            "Index": 61,
+            "Name": "Tongue_BS_HI.Tounge_Twist_L_HI"
+        },
+        {
+            "Index": 62,
+            "Name": "Tongue_BS_HI.Deku_Tounge"
+        }
+    ]
+}

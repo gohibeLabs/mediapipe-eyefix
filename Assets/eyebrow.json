@@ -1,0 +1,344 @@
+{
+    "BlendShapes": [
+        {
+            "Index": 0,
+            "Name": "ArKit_Eyebrow.jawForward"
+        },
+        {
+            "Index": 1,
+            "Name": "ArKit_Eyebrow.jawLeft"
+        },
+        {
+            "Index": 2,
+            "Name": "ArKit_Eyebrow.jawRight"
+        },
+        {
+            "Index": 3,
+            "Name": "ArKit_Eyebrow.jawOpen"
+        },
+        {
+            "Index": 4,
+            "Name": "ArKit_Eyebrow.mouthClose"
+        },
+        {
+            "Index": 5,
+            "Name": "ArKit_Eyebrow.mouthFunnel"
+        },
+        {
+            "Index": 6,
+            "Name": "ArKit_Eyebrow.mouthPucker"
+        },
+        {
+            "Index": 7,
+            "Name": "ArKit_Eyebrow.mouthLeft"
+        },
+        {
+            "Index": 8,
+            "Name": "ArKit_Eyebrow.mouthRight"
+        },
+        {
+            "Index": 9,
+            "Name": "ArKit_Eyebrow.mouthSmileLeft"
+        },
+        {
+            "Index": 10,
+            "Name": "ArKit_Eyebrow.mouthSmileRight"
+        },
+        {
+            "Index": 11,
+            "Name": "ArKit_Eyebrow.mouthFrownLeft"
+        },
+        {
+            "Index": 12,
+            "Name": "ArKit_Eyebrow.mouthFrownRight"
+        },
+        {
+            "Index": 13,
+            "Name": "ArKit_Eyebrow.mouthDimpleLeft"
+        },
+        {
+            "Index": 14,
+            "Name": "ArKit_Eyebrow.mouthDimpleRight"
+        },
+        {
+            "Index": 15,
+            "Name": "ArKit_Eyebrow.mouthStretchLeft"
+        },
+        {
+            "Index": 16,
+            "Name": "ArKit_Eyebrow.mouthStretchRight"
+        },
+        {
+            "Index": 17,
+            "Name": "ArKit_Eyebrow.mouthRollLower"
+        },
+        {
+            "Index": 18,
+            "Name": "ArKit_Eyebrow.mouthRollUpper"
+        },
+        {
+            "Index": 19,
+            "Name": "ArKit_Eyebrow.mouthShrugLower"
+        },
+        {
+            "Index": 20,
+            "Name": "ArKit_Eyebrow.mouthShrugUpper"
+        },
+        {
+            "Index": 21,
+            "Name": "ArKit_Eyebrow.mouthPressLeft"
+        },
+        {
+            "Index": 22,
+            "Name": "ArKit_Eyebrow.mouthPressRight"
+        },
+        {
+            "Index": 23,
+            "Name": "ArKit_Eyebrow.mouthLowerDownLeft"
+        },
+        {
+            "Index": 24,
+            "Name": "ArKit_Eyebrow.mouthLowerDownRight"
+        },
+        {
+            "Index": 25,
+            "Name": "ArKit_Eyebrow.mouthUpperUpLeft"
+        },
+        {
+            "Index": 26,
+            "Name": "ArKit_Eyebrow.mouthUpperUpRight"
+        },
+        {
+            "Index": 27,
+            "Name": "ArKit_Eyebrow.eyeBlinkLeft"
+        },
+        {
+            "Index": 28,
+            "Name": "ArKit_Eyebrow.eyeLookDownLeft"
+        },
+        {
+            "Index": 29,
+            "Name": "ArKit_Eyebrow.eyeLookInLeft"
+        },
+        {
+            "Index": 30,
+            "Name": "ArKit_Eyebrow.eyeLookOutLeft"
+        },
+        {
+            "Index": 31,
+            "Name": "ArKit_Eyebrow.eyeLookUpLeft"
+        },
+        {
+            "Index": 32,
+            "Name": "ArKit_Eyebrow.eyeSquintLeft"
+        },
+        {
+            "Index": 33,
+            "Name": "ArKit_Eyebrow.eyeWideLeft"
+        },
+        {
+            "Index": 34,
+            "Name": "ArKit_Eyebrow.eyeBlinkRight"
+        },
+        {
+            "Index": 35,
+            "Name": "ArKit_Eyebrow.eyeLookDownRight"
+        },
+        {
+            "Index": 36,
+            "Name": "ArKit_Eyebrow.eyeLookInRight"
+        },
+        {
+            "Index": 37,
+            "Name": "ArKit_Eyebrow.eyeLookOutRight"
+        },
+        {
+            "Index": 38,
+            "Name": "ArKit_Eyebrow.eyeLookUpRight"
+        },
+        {
+            "Index": 39,
+            "Name": "ArKit_Eyebrow.eyeSquintRight"
+        },
+        {
+            "Index": 40,
+            "Name": "ArKit_Eyebrow.eyeWideRight"
+        },
+        {
+            "Index": 41,
+            "Name": "ArKit_Eyebrow.browDownLeft"
+        },
+        {
+            "Index": 42,
+            "Name": "ArKit_Eyebrow.browDownRight"
+        },
+        {
+            "Index": 43,
+            "Name": "ArKit_Eyebrow.browInnerUp"
+        },
+        {
+            "Index": 44,
+            "Name": "ArKit_Eyebrow.browOuterUpLeft"
+        },
+        {
+            "Index": 45,
+            "Name": "ArKit_Eyebrow.browOuterUpRight"
+        },
+        {
+            "Index": 46,
+            "Name": "ArKit_Eyebrow.cheekPuff"
+        },
+        {
+            "Index": 47,
+            "Name": "ArKit_Eyebrow.cheekSquintLeft"
+        },
+        {
+            "Index": 48,
+            "Name": "ArKit_Eyebrow.cheekSquintRight"
+        },
+        {
+            "Index": 49,
+            "Name": "ArKit_Eyebrow.noseSneerLeft"
+        },
+        {
+            "Index": 50,
+            "Name": "ArKit_Eyebrow.noseSneerRight"
+        },
+        {
+            "Index": 51,
+            "Name": "ArKit_Eyebrow.tongueOut"
+        },
+        {
+            "Index": 52,
+            "Name": "Eyebrow_BS_HI.Lattino_Female_Eyebrow_HI"
+        },
+        {
+            "Index": 53,
+            "Name": "Eyebrow_BS_HI.Asian_Female_Eyebrow_HI"
+        },
+        {
+            "Index": 54,
+            "Name": "Eyebrow_BS_HI.African_Female_Eyebrow_HI"
+        },
+        {
+            "Index": 55,
+            "Name": "Eyebrow_BS_HI.Asian_Male_Eyebrow_HI"
+        },
+        {
+            "Index": 56,
+            "Name": "Eyebrow_BS_HI.African_Male_Eyebrow_HI"
+        },
+        {
+            "Index": 57,
+            "Name": "Eyebrow_BS_HI.Caucasian_Male_Eyebrow_HI"
+        },
+        {
+            "Index": 58,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_up_HI"
+        },
+        {
+            "Index": 59,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_down_HI"
+        },
+        {
+            "Index": 60,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_Inner_up_HI"
+        },
+        {
+            "Index": 61,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_outer_up_HI"
+        },
+        {
+            "Index": 62,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_inner_down_HI"
+        },
+        {
+            "Index": 63,
+            "Name": "Eyebrow_BS_HI.RT_eyebrow_outer_down_HI"
+        },
+        {
+            "Index": 64,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_up_HI"
+        },
+        {
+            "Index": 65,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_down_HI"
+        },
+        {
+            "Index": 66,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_inner_up_HI"
+        },
+        {
+            "Index": 67,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_outer_up_HI"
+        },
+        {
+            "Index": 68,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_inner_down_HI"
+        },
+        {
+            "Index": 69,
+            "Name": "Eyebrow_BS_HI.LT_eyebrow_outer_down_HI"
+        },
+        {
+            "Index": 70,
+            "Name": "Eyebrow_BS_HI.RT_Thin_Eyebrow_Down_HI"
+        },
+        {
+            "Index": 71,
+            "Name": "Eyebrow_BS_HI.RT_Thin_Eyebrow_Up_HI"
+        },
+        {
+            "Index": 72,
+            "Name": "Eyebrow_BS_HI.LT_Thin_Eyebrow_Down_HI"
+        },
+        {
+            "Index": 73,
+            "Name": "Eyebrow_BS_HI.LT_Thin_Eyebrow_Up_HI"
+        },
+        {
+            "Index": 74,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_Law"
+        },
+        {
+            "Index": 75,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_Reze"
+        },
+        {
+            "Index": 76,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_Garou"
+        },
+        {
+            "Index": 77,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_Nezuko"
+        },
+        {
+            "Index": 78,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_SJW"
+        },
+        {
+            "Index": 79,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_Deku"
+        },
+        {
+            "Index": 80,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_01"
+        },
+        {
+            "Index": 81,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_02"
+        },
+        {
+            "Index": 82,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_03"
+        },
+        {
+            "Index": 83,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_04"
+        },
+        {
+            "Index": 84,
+            "Name": "Eyebrow_BS_HI.Hi_Eyebrow_05"
+        }
+    ]
+}
