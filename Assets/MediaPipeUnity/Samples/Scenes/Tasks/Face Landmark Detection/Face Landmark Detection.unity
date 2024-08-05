@@ -678,6 +678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695845550}
   - component: {fileID: 695845549}
+  - component: {fileID: 695845551}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -712,6 +713,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &695845551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695845548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b654f75cadea42429ee9190e3909afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bsNames:
+  - BrowDownLeft
+  - BrowDownRight
+  - BrowInnerUp
+  - BrowOuterUpLeft
+  - BrowOuterUpRight
+  - CheekPuff
+  - CheekSquintLeft
+  - CheekSquintRight
+  - EyeBlinkLeft
+  - EyeBlinkRight
+  - EyeLookDownLeft
+  - EyeLookDownRight
+  - EyeLookInLeft
+  - EyeLookInRight
+  - EyeLookOutLeft
+  - EyeLookOutRight
+  - EyeLookUpLeft
+  - EyeLookUpRight
+  - EyeSquintLeft
+  - EyeSquintRight
+  - EyeWideLeft
+  - EyeWideRight
+  - JawForward
+  - JawLeft
+  - JawOpen
+  - JawRight
+  - MouthClose
+  - MouthDimpleLeft
+  - MouthDimpleRight
+  - MouthFrownLeft
+  - MouthFrownRight
+  - MouthFunnel
+  - MouthLeft
+  - MouthLowerDownLeft
+  - MouthLowerDownRight
+  - MouthPressLeft
+  - MouthPressRight
+  - MouthPucker
+  - MouthRight
+  - MouthRollLower
+  - MouthRollUpper
+  - MouthShrugLower
+  - MouthShrugUpper
+  - MouthSmileLeft
+  - MouthSmileRight
+  - MouthStretchLeft
+  - MouthStretchRight
+  - MouthUpperUpLeft
+  - MouthUpperUpRight
+  - NoseSneerLeft
+  - NoseSneerRight
+  - TongueOut
+  minCutoff: 1
+  beta: 0.007
+  dCutoff: 1
+  minInput: 0
+  maxInput: 100
+  minOutput: 0
+  maxOutput: 100
+  isOneEuro: 1
+  multiplier: 1
 --- !u!1001 &1006057040
 PrefabInstance:
   m_ObjectHideFlags: 0

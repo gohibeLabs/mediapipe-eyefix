@@ -100,26 +100,27 @@ public class ExpressionApplier : MonoBehaviour
         {
             foreach (Category cat in data.categories)
             {
-                //Debug.Log("BS " + cat.categoryName + " Score = " + (cat.score * 100));
+                float value = ExpressionBlendShapesController.GetInstance().GetBlendsapeValueFromFilter(cat.categoryName.ToLower(), cat.score * 100);
+                Debug.Log("Returned value = " + value);
                 if (faceDictionary.TryGetValue(cat.categoryName.ToLower(), out int faceIndex))
                 {
-                    face.SetBlendShapeWeight(faceIndex, cat.score * 100);
+                    face.SetBlendShapeWeight(faceIndex, value);
                 }
                 if (eyebrowDictionary.TryGetValue(cat.categoryName.ToLower(), out int eyebrowIndex))
                 {
-                    eyebrow.SetBlendShapeWeight(eyebrowIndex, cat.score * 100);
+                    eyebrow.SetBlendShapeWeight(eyebrowIndex, value);
                 }
                 if (eyelashDictionary.TryGetValue(cat.categoryName.ToLower(), out int eyelashIndex))
                 {
-                    eyelash.SetBlendShapeWeight(eyelashIndex, cat.score * 100);
+                    eyelash.SetBlendShapeWeight(eyelashIndex, value);
                 }
                 if (UpperTeethDictionary.TryGetValue(cat.categoryName.ToLower(), out int upperTeethIndex))
                 {
-                    upperTeeth.SetBlendShapeWeight(upperTeethIndex, cat.score * 100);
+                    upperTeeth.SetBlendShapeWeight(upperTeethIndex, value);
                 }
                 if (lowerTeethDictionary.TryGetValue(cat.categoryName.ToLower(), out int lowerTeethIndex))
                 {
-                    lowerteeth.SetBlendShapeWeight(lowerTeethIndex, cat.score * 100);
+                    lowerteeth.SetBlendShapeWeight(lowerTeethIndex, value);
                 }
             }
         });
