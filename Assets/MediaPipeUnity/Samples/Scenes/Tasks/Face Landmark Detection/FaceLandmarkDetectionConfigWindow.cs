@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Mediapipe.Unity.Sample.UI;
+using MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection;
 
 namespace Mediapipe.Unity.Sample.FaceLandmarkDetection.UI
 {
@@ -26,7 +27,7 @@ namespace Mediapipe.Unity.Sample.FaceLandmarkDetection.UI
 
     private void Start()
     {
-      _config = GameObject.Find("Solution").GetComponent<FaceLandmarkerRunner>().config;
+      _config = GameObject.Find("Solution").GetComponent<FaceLandmarkerRunner>().Config;
       InitializeContents();
     }
 
