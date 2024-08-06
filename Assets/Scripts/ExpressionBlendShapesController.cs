@@ -5,61 +5,62 @@ using UnityEngine;
 public class ExpressionBlendShapesController : MonoBehaviour
 {
     public List<string> bsNames = new List<string>{
-    "BrowDownLeft",
-    "BrowDownRight",
-    "BrowInnerUp",
-    "BrowOuterUpLeft",
-    "BrowOuterUpRight",
-    "CheekPuff",
-    "CheekSquintLeft",
-    "CheekSquintRight",
-    "EyeBlinkLeft",
-    "EyeBlinkRight",
-    "EyeLookDownLeft",
-    "EyeLookDownRight",
-    "EyeLookInLeft",
-    "EyeLookInRight",
-    "EyeLookOutLeft",
-    "EyeLookOutRight",
-    "EyeLookUpLeft",
-    "EyeLookUpRight",
-    "EyeSquintLeft",
-    "EyeSquintRight",
-    "EyeWideLeft",
-    "EyeWideRight",
-    "JawForward",
-    "JawLeft",
-    "JawOpen",
-    "JawRight",
-    "MouthClose",
-    "MouthDimpleLeft",
-    "MouthDimpleRight",
-    "MouthFrownLeft",
-    "MouthFrownRight",
-    "MouthFunnel",
-    "MouthLeft",
-    "MouthLowerDownLeft",
-    "MouthLowerDownRight",
-    "MouthPressLeft",
-    "MouthPressRight",
-    "MouthPucker",
-    "MouthRight",
-    "MouthRollLower",
-    "MouthRollUpper",
-    "MouthShrugLower",
-    "MouthShrugUpper",
-    "MouthSmileLeft",
-    "MouthSmileRight",
-    "MouthStretchLeft",
-    "MouthStretchRight",
-    "MouthUpperUpLeft",
-    "MouthUpperUpRight",
-    "NoseSneerLeft",
-    "NoseSneerRight",
-    "TongueOut"
+        "BrowDownLeft",
+        "BrowDownRight",
+        "BrowInnerUp",
+        "BrowOuterUpLeft",
+        "BrowOuterUpRight",
+        "CheekPuff",
+        "CheekSquintLeft",
+        "CheekSquintRight",
+        "EyeBlinkLeft",
+        "EyeBlinkRight",
+        "EyeLookDownLeft",
+        "EyeLookDownRight",
+        "EyeLookInLeft",
+        "EyeLookInRight",
+        "EyeLookOutLeft",
+        "EyeLookOutRight",
+        "EyeLookUpLeft",
+        "EyeLookUpRight",
+        "EyeSquintLeft",
+        "EyeSquintRight",
+        "EyeWideLeft",
+        "EyeWideRight",
+        "JawForward",
+        "JawLeft",
+        "JawOpen",
+        "JawRight",
+        "MouthClose",
+        "MouthDimpleLeft",
+        "MouthDimpleRight",
+        "MouthFrownLeft",
+        "MouthFrownRight",
+        "MouthFunnel",
+        "MouthLeft",
+        "MouthLowerDownLeft",
+        "MouthLowerDownRight",
+        "MouthPressLeft",
+        "MouthPressRight",
+        "MouthPucker",
+        "MouthRight",
+        "MouthRollLower",
+        "MouthRollUpper",
+        "MouthShrugLower",
+        "MouthShrugUpper",
+        "MouthSmileLeft",
+        "MouthSmileRight",
+        "MouthStretchLeft",
+        "MouthStretchRight",
+        "MouthUpperUpLeft",
+        "MouthUpperUpRight",
+        "NoseSneerLeft",
+        "NoseSneerRight",
+        "TongueOut"
     };
 
     public Dictionary<string, OneEuroFilter> bsFilters = new Dictionary<string, OneEuroFilter>();
+    public Dictionary<string, bool> bsEnabled = new Dictionary<string, bool>();
 
     private static ExpressionBlendShapesController Instance;
 
@@ -72,6 +73,15 @@ public class ExpressionBlendShapesController : MonoBehaviour
     [SerializeField] private double maxOutput = 1;
     [SerializeField] private bool isOneEuro = true;
     [SerializeField] private double multiplier = 1;
+
+    [System.Serializable]
+    public class BlendShapeToggle
+    {
+        public string name;
+        public bool isEnabled;
+    }
+
+    public List<BlendShapeToggle> blendShapeToggles = new List<BlendShapeToggle>();
 
     private void Awake()
     {
@@ -92,15 +102,26 @@ public class ExpressionBlendShapesController : MonoBehaviour
 
     private void Start()
     {
+        PopulateBlendShapeToggles();
         InitiateFilters();
+        InitializeBlendShapeToggles();
+    }
+
+    private void OnValidate()
+    {
+        InitializeBlendShapeToggles();
     }
 
     public float GetBlendsapeValueFromFilter(string bsKey, float value)
     {
-        OneEuroFilter temp;
-        if (bsFilters.TryGetValue(bsKey, out temp))
+        if (bsEnabled.ContainsKey(bsKey) && !bsEnabled[bsKey])
         {
-            double returnedvalue = temp.CalculateValue((double)value);
+            return 0;
+        }
+
+        if (bsFilters.TryGetValue(bsKey, out OneEuroFilter filter))
+        {
+            double returnedvalue = filter.CalculateValue((double)value);
             if (!double.IsNaN(returnedvalue))
             {
                 Debug.LogError(bsKey);
@@ -108,8 +129,8 @@ public class ExpressionBlendShapesController : MonoBehaviour
             }
         }
         return value;
-
     }
+
     [ContextMenu("Change Values")]
     public void InitiateFilters()
     {
@@ -133,6 +154,28 @@ public class ExpressionBlendShapesController : MonoBehaviour
         this.multiplier = multiplier;
         this.dCutoff = dCutoff;
         InitiateFilters();
-        //gameObject.SetActive(false);
+    }
+
+    private void PopulateBlendShapeToggles()
+    {
+        blendShapeToggles.Clear();
+        foreach (string bsName in bsNames)
+        {
+            BlendShapeToggle toggle = new BlendShapeToggle
+            {
+                name = bsName,
+                isEnabled = true
+            };
+            blendShapeToggles.Add(toggle);
+        }
+    }
+
+    private void InitializeBlendShapeToggles()
+    {
+        bsEnabled.Clear();
+        foreach (var toggle in blendShapeToggles)
+        {
+            bsEnabled.Add(toggle.name.ToLower(), toggle.isEnabled);
+        }
     }
 }
