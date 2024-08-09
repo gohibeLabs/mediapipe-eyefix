@@ -29,7 +29,7 @@ public class IrisTracker : MonoBehaviour
     /// <summary>
     /// Left eye min-max range values for clamping Y-axis rotation angles.
     /// </summary>
-    [SerializeField] [Range(-70, 70)] private int[] leftEyeAngleRangeInOut = {-10, 10};
+    [SerializeField] [Range(-70, 70)] private int[] leftEyeAngleRangeInOut = {-45, 45};
     
     /// <summary>
     /// Left eye Y-axis rotation angle offset.
@@ -39,7 +39,7 @@ public class IrisTracker : MonoBehaviour
     /// <summary>
     /// Right eye min-max range values for clamping Y-axis rotation angles.
     /// </summary>
-    [SerializeField] [Range(-70, 70)] private int[] rightEyeAngleRangeInOut = {-10, 10};
+    [SerializeField] [Range(-70, 70)] private int[] rightEyeAngleRangeInOut = {-45, 45};
     
     /// <summary>
     /// Right eye Y-axis rotation angle offset.
@@ -49,7 +49,7 @@ public class IrisTracker : MonoBehaviour
     /// <summary>
     /// Left & Right (Both) eye min-max range values for clamping X-axis rotation angles.
     /// </summary>
-    [SerializeField] [Range(-30, 30)] private int[] bothEyeAngleRangeUpDown = {-15, 7};
+    [SerializeField] [Range(-30, 30)] private int[] bothEyeAngleRangeUpDown = {-15, 15};
     
     /// <summary>
     /// Angle multiplication factor for normalized iris positions for up-down movement.
@@ -60,6 +60,16 @@ public class IrisTracker : MonoBehaviour
     /// Angle multiplication factor for normalized iris positions for in-out movement.
     /// </summary>
     [SerializeField] private float angleMultiplierInOut = 80f;
+
+    /// <summary>
+    /// Multiplier for horizontal Y-axis head rotation based angle offset.
+    /// </summary>
+    [SerializeField] private float headOffsetHorizontalMultiplier = 2f;
+    
+    /// <summary>
+    /// Multiplier for vertical X-axis head rotation based angle offset.
+    /// </summary>
+    [SerializeField] private float headOffsetVerticalMultiplier = 2f;
 
     /// <summary>
     /// Nose bridge top point position, in world space.
@@ -148,17 +158,22 @@ public class IrisTracker : MonoBehaviour
     private void ApplyEyeRotations(DataStructures.EyeData leftEyeData, DataStructures.EyeData rightEyeData,
         Vector3 noseTopPos, Vector3 noseBottomPos)
     {
-        var (verticalTiltFactor, horizontalTiltFactor) = CalculateTiltFactors(noseTopPos, noseBottomPos,
+        var (verticalTiltFactor, horizontalTiltFactor, horizontalSign, verticalSign) = CalculateTiltFactors(noseTopPos, noseBottomPos,
             leftEyeData.OuterMost, rightEyeData.OuterMost);
         
         // First we calculate in-out (Y-axis) rotation euler angles for both eyes.
-        var leftRotation = CalculateInOutEyeRotation(leftEyeData, leftEyeYAngleOffset, -1, horizontalTiltFactor);
-        var rightRotation = CalculateInOutEyeRotation(rightEyeData, rightEyeYAngleOffset, 1, horizontalTiltFactor);
+        
+        // print(-horizontalSign * leftEyeYAngleOffset);
+        
+        var leftRotation = CalculateInOutEyeRotation(leftEyeData, -horizontalSign * leftEyeYAngleOffset, -1, horizontalTiltFactor);
+        // var rightRotation = CalculateInOutEyeRotation(rightEyeData, rightEyeYAngleOffset, 1, horizontalTiltFactor);
 
         // Then we calculate up-down (X-axis) rotation euler angles for both eyes.
-        var upDownAngle = GetIrisBasedAngle(rightEyeData.IrisCenter, 
-            rightEyeData.TopMost, rightEyeData.BottomMost, 1, angleMultiplierUpDown,
-            verticalTiltFactor);
+        // var upDownAngle = GetIrisBasedAngle(rightEyeData.IrisCenter, 
+        //     rightEyeData.TopMost, rightEyeData.BottomMost, 1, verticalSign * angleMultiplierUpDown,
+        //     verticalTiltFactor);
+
+        var upDownAngle = 0;
 
         // Finally we combine calculated local euler angles for both X and Y axes and smoothly apply rotations to both eyes.
         Utilities.ApplyClampedSmoothRotation(leftEyeBone, new Vector3(upDownAngle, leftRotation.y, 0),
@@ -220,7 +235,7 @@ public class IrisTracker : MonoBehaviour
         // Normalized position of iris relative to min/max point.
         // A value of 0 means iris is at center. A value of 0.5f means iris is at one extreme end.
         var normalizedPos = Vector3.Distance(projectedIrisPoint, center) / distHalf;
-
+        
         // Adjust angle multiplier based on both vertical and horizontal tilt.
         // This is important to resolve the cross-eyed look when tilting head on any axis.
         var adjustedMultiplier = angleMultiplier * tiltFactor;
@@ -238,25 +253,33 @@ public class IrisTracker : MonoBehaviour
     /// </summary>
     /// <param name="noseTop">Nose bridge top point world position.</param>
     /// <param name="noseBottom">Nose bridge bottom point world position.</param>
-    /// <param name="leftEye">Left eye outer most point world position.</param>
-    /// <param name="rightEye">Right eye outer most point world position.</param>
+    /// <param name="leftEye">Left eye outermost point world position.</param>
+    /// <param name="rightEye">Right eye outermost point world position.</param>
     /// <returns>A horizontal and vertical tilt factor tuple.</returns>
-    private (float verticalTiltFactor, float horizontalTiltFactor) 
+    private (float verticalTiltFactor, float horizontalTiltFactor, float horizontalSign, float verticalSign) 
         CalculateTiltFactors(Vector3 noseTop, Vector3 noseBottom, Vector3 leftEye, Vector3 rightEye)
     {
         // Calculate vertical tilt using nose bridge top and bottom points.
         var noseDir = (noseTop - noseBottom).normalized;
         var upVector = Vector3.up;
         var verticalTiltAngle = Vector3.Angle(noseDir, upVector);
-        var verticalTiltFactor = verticalTiltAngle / 90f - 1f; // 1 when upright, 0 when tilted 90 degrees.
+        var verticalTiltSignedAngle = Vector3.SignedAngle(noseDir, upVector, Vector3.right);
+        var verticalSign = Mathf.Sign(verticalTiltSignedAngle);
+        var verticalTiltFactor = verticalTiltAngle / 90f - 1f; // 1 when upright, 0 when head is tilted 90 degrees on X-axis.
 
         // Calculate horizontal tilt using left and right eye outer points.
         var eyeDir = (rightEye - leftEye).normalized;
         var rightVector = Vector3.right;
         var horizontalTiltAngle = Vector3.Angle(eyeDir, rightVector);
-        var horizontalTiltFactor = horizontalTiltAngle / 90f - 1f; // 1 when level, 0 when tilted 90 degrees.
+        var horizontalTiltSignedAngle = Vector3.SignedAngle(eyeDir, rightVector, Vector3.up);
+        var horizontalSign = Mathf.Sign(horizontalTiltSignedAngle);
+        var horizontalTiltFactor = horizontalTiltAngle / 90f - 1; // 1 when level, 0 when head is tilted 90 degrees on Y-axis.
 
-        return (verticalTiltFactor, horizontalTiltFactor);
+        // print($"{sign}, {verticalTiltFactor}, {horizontalTiltFactor}");
+        
+        return (headOffsetVerticalMultiplier * verticalTiltFactor, 
+            headOffsetHorizontalMultiplier * horizontalTiltFactor, 
+            horizontalSign, verticalSign);
     }
     
     /// <summary>

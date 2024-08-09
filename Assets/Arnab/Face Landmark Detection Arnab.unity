@@ -1402,16 +1402,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8662b068ccda4264b5957f20dafeff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headBone: {fileID: 8643892706234282813}
   leftEyeBone: {fileID: 7239528559178966543}
   rightEyeBone: {fileID: 5305259353775361222}
-  leftEyeAngleRangeInOut: ddffffff23000000
-  leftEyeYAngleOffset: 1.9
-  rightEyeAngleRangeInOut: ddffffff23000000
+  leftEyeAngleRangeInOut: d3ffffff28000000
+  leftEyeYAngleOffset: 2
+  rightEyeAngleRangeInOut: d3ffffff2d000000
   rightEyeYAngleOffset: -5
-  bothEyeAngleRangeUpDown: f1ffffff07000000
+  bothEyeAngleRangeUpDown: ecffffff14000000
   angleMultiplierUpDown: 60
   angleMultiplierInOut: 80
+  headOffsetHorizontalMultiplier: 1.3
+  headOffsetVerticalMultiplier: 2
 --- !u!137 &1145278805 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2132946940586443567, guid: 59af3253048b8488eb19e7d6bfcde52f,
@@ -1846,7 +1847,7 @@ PrefabInstance:
     - target: {fileID: 3951304242052133043, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3951304242052133043, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
@@ -2502,12 +2503,6 @@ RectTransform:
 --- !u!1 &8643892706234282812 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3866931742885030211, guid: 59af3253048b8488eb19e7d6bfcde52f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4782646267672468095}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8643892706234282813 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7146606496219205185, guid: 59af3253048b8488eb19e7d6bfcde52f,
     type: 3}
   m_PrefabInstance: {fileID: 4782646267672468095}
   m_PrefabAsset: {fileID: 0}

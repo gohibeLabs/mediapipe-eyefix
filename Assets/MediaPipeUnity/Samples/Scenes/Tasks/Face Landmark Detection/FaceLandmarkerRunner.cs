@@ -124,7 +124,12 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
         private void OnFaceLandmarkDetectionOutput(FaceLandmarkerResult result, Image image, long timestamp)
         {
             //Debug.Log("RESULT = " + result.facialTransformationMatrixes);
-            Classifications data = result.faceBlendshapes[0];
+            
+            // Check for situations where face is
+            // not inside camera view properly, as then valid landmarks aren't populated.
+            if (result.faceBlendshapes == null) return;
+            
+            var data = result.faceBlendshapes[0];
             ExpressionApplier.Instance.ApplyDataOnFace(data);
             ExpressionApplier.Instance.SetFaceRotation(result.facialTransformationMatrixes);
             IrisTracker.Instance.TrackIrisMovement(result.faceLandmarks);
