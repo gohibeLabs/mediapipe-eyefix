@@ -8,7 +8,7 @@ namespace Arnab.Scripts
     /// </summary>
     public static class DataStructures
     {
-        public struct EyeData
+        public struct EyeLandMarkData
         {
             public Vector3 IrisCenter;
             public Vector3 InnerMost;
