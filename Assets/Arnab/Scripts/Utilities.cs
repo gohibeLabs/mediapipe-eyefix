@@ -21,8 +21,11 @@ namespace Arnab.Scripts
         {
             var clampedRotation = new Vector3(
                 Mathf.Clamp(targetRotation.x, angleRangeXAxis[0], angleRangeXAxis[1]),
-                Mathf.Clamp(targetRotation.y, angleRangeYAxis[0], angleRangeYAxis[1]), 0);
-            target.localRotation = Quaternion.Lerp(target.localRotation, Quaternion.Euler(clampedRotation), Time.deltaTime * 10);
+                Mathf.Clamp(targetRotation.y, angleRangeYAxis[0], angleRangeYAxis[1]),
+                0);
+    
+            // Increase smoothing by reducing the lerp speed
+            target.localRotation = Quaternion.Lerp(target.localRotation, Quaternion.Euler(clampedRotation), Time.deltaTime * 5);
         }
         
         /// <summary>

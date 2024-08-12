@@ -1491,7 +1491,7 @@ MonoBehaviour:
   leftEyeYAngleOffset: 0
   rightEyeAngleRangeInOut: d9ffffff26000000
   rightEyeYAngleOffset: 0
-  leftEyeOffsetFromRightEye: -15
+  leftEyeOffsetFromRightEye: -0.2
   bothEyeAngleRangeUpDown: e7ffffff1e000000
   angleMultiplierUpDown: 60
   angleMultiplierInOut: 78
@@ -2029,7 +2029,7 @@ PrefabInstance:
     - target: {fileID: 2749631942333791344, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9935719
+      value: 0.99785894
       objectReference: {fileID: 0}
     - target: {fileID: 2749631942333791344, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
@@ -2039,7 +2039,7 @@ PrefabInstance:
     - target: {fileID: 2749631942333791344, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.11320323
+      value: 0.065403156
       objectReference: {fileID: 0}
     - target: {fileID: 2749631942333791344, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
@@ -2049,7 +2049,7 @@ PrefabInstance:
     - target: {fileID: 2749631942333791344, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 13
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 3951304242052133043, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
