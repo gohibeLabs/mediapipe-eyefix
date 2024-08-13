@@ -482,11 +482,11 @@ public class IrisTracker : MonoBehaviour
         var dir = (outerPoint - innerPoint).normalized * dirSign;
         var center = (innerPoint + outerPoint) / 2f;
         var projectedIrisPoint = center + Vector2.Dot(irisCenter - center, dir) * dir;
-    
+
         float normalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
-        
-        print(normalizedPos);
-    
+
+        print("Initial normalized pos: " + normalizedPos);
+
         if (Mathf.Abs(normalizedPos) < deadzoneInOut)
         {
             return 0f;
@@ -496,13 +496,29 @@ public class IrisTracker : MonoBehaviour
             // Adjust the normalized position to account for the dead-zone
             normalizedPos = Mathf.Sign(normalizedPos) * (Mathf.Abs(normalizedPos) - deadzoneInOut) / (1f - deadzoneInOut);
         }
-    
-        // Adjust for head rotation
-        float headRotationFactor = Mathf.Clamp01(Mathf.Abs(headYRotation) / 90f);
-        float compensation = headRotationFactor * 0.3f * Mathf.Sign(headYRotation);
-        normalizedPos -= compensation;
-    
-        return Mathf.Clamp(normalizedPos, -1f, 1f);
+
+        // Calculate head rotation factor (0 to 1)
+        float maxHeadRotation = 35f;
+        float headRotationFactor = Mathf.Clamp01(Mathf.Abs(headYRotation) / maxHeadRotation);
+
+        // Calculate offset based on head rotation
+        float offset = headRotationFactor * Mathf.Sign(headYRotation);
+
+        // Apply offset
+        normalizedPos -= offset;
+
+        // Calculate multiplier based on head rotation (1 to 2)
+        float multiplier = 1f + headRotationFactor;
+
+        // Apply multiplier to enhance sensitivity
+        normalizedPos *= multiplier;
+
+        // Clamp the final value
+        float clampedPos = Mathf.Clamp(normalizedPos, -1f, 1f);
+
+        print("Final normalized pos: " + clampedPos);
+
+        return clampedPos;
     }
     
     private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
