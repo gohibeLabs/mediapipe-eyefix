@@ -1488,15 +1488,12 @@ MonoBehaviour:
   leftEyeBone: {fileID: 7239528559178966543}
   rightEyeBone: {fileID: 5305259353775361222}
   leftEyeAngleRangeInOut: daffffff27000000
-  leftEyeYAngleOffset: 0
   rightEyeAngleRangeInOut: d9ffffff26000000
-  rightEyeYAngleOffset: 0
   leftEyeOffsetFromRightEye: -0.2
   bothEyeAngleRangeUpDown: e7ffffff1e000000
+  deadzoneInOut: 0.085
   angleMultiplierUpDown: 60
   angleMultiplierInOut: 78
-  headOffsetHorizontalMultiplier: 1
-  headOffsetVerticalMultiplier: 2
 --- !u!137 &1145278805 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2132946940586443567, guid: 59af3253048b8488eb19e7d6bfcde52f,

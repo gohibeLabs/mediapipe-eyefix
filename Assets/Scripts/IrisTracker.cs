@@ -361,23 +361,18 @@ public class IrisTracker : MonoBehaviour
 
     [SerializeField] [Range(-70, 70)] private int[] leftEyeAngleRangeInOut = {-38, 39};
 
-    [SerializeField] [Range(-5, 5)] private float leftEyeYAngleOffset = 0f;
-
     [SerializeField] [Range(-70, 70)] private int[] rightEyeAngleRangeInOut = {-39, 38};
-
-    [SerializeField] [Range(-5, 5)] private float rightEyeYAngleOffset = 0f;
 
     [SerializeField] [Range(-20, 20)] private float leftEyeOffsetFromRightEye = -15f;
 
     [SerializeField] [Range(-30, 30)] private int[] bothEyeAngleRangeUpDown = {-25, 30};
+    
+    // Apply a small deadzone
+    [SerializeField] [Range(-0.2f, 0.2f)] private float deadzoneInOut = 0.08f;
 
     [SerializeField] private float angleMultiplierUpDown = 60f;
 
     [SerializeField] private float angleMultiplierInOut = 78f;
-
-    [SerializeField] private float headOffsetHorizontalMultiplier = 1f;
-
-    [SerializeField] private float headOffsetVerticalMultiplier = 2f;
 
     private Vector3 _noseTopPos;
 
@@ -459,10 +454,17 @@ public class IrisTracker : MonoBehaviour
 
         float trackedEyeAngle = GetIrisBasedAngle(irisCenter2D, innerPoint2D, outerPoint2D, lookingRightSide ? -1f : 1f, headYRotation);
 
-        ApplyEyeRotation(trackedEye, trackedEyeAngle, trackedEyeAngleMaxRange);
+        // Calculate half offset
+        float halfOffset = leftEyeOffsetFromRightEye / 2f;
+
+        // Apply rotation with half offset to tracked eye
+        ApplyEyeRotation(trackedEye, trackedEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), trackedEyeAngleMaxRange);
     
+        // Calculate following eye angle with full offset
         float followingEyeAngle = trackedEyeAngle + (lookingRightSide ? leftEyeOffsetFromRightEye : -leftEyeOffsetFromRightEye);
-        ApplyEyeRotation(followingEye, followingEyeAngle, followingEyeAngleMaxRange);
+    
+        // Apply rotation with half offset to following eye
+        ApplyEyeRotation(followingEye, followingEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), followingEyeAngleMaxRange);
     }
 
     // private Vector3 CalculateInOutEyeRotation(DataStructures.EyeLandMarkData eyeData, float yAngleOffset, float dirSign,
@@ -482,17 +484,17 @@ public class IrisTracker : MonoBehaviour
         var projectedIrisPoint = center + Vector2.Dot(irisCenter - center, dir) * dir;
     
         float normalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
+        
+        print(normalizedPos);
     
-        // Apply a small deadzone
-        float deadzone = 0.05f;
-        if (Mathf.Abs(normalizedPos) < deadzone)
+        if (Mathf.Abs(normalizedPos) < deadzoneInOut)
         {
             return 0f;
         }
         else
         {
             // Adjust the normalized position to account for the dead-zone
-            normalizedPos = Mathf.Sign(normalizedPos) * (Mathf.Abs(normalizedPos) - deadzone) / (1f - deadzone);
+            normalizedPos = Mathf.Sign(normalizedPos) * (Mathf.Abs(normalizedPos) - deadzoneInOut) / (1f - deadzoneInOut);
         }
     
         // Adjust for head rotation
@@ -506,9 +508,7 @@ public class IrisTracker : MonoBehaviour
     private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
     {
         float targetAngle = Mathf.Lerp(angleRange[0], angleRange[1], (normalizedAngle + 1f) / 2f);
-    
         Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
-    
         eyeBone.localRotation = Quaternion.Slerp(eyeBone.localRotation, targetRotation, Time.deltaTime * 15f);
     }
 
