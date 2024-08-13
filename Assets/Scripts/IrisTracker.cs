@@ -376,6 +376,12 @@ public class IrisTracker : MonoBehaviour
 
     [SerializeField] private float angleMultiplierInOut = 78f;
 
+    public float maxHeadRotation = 35f;
+    public float intensityFactor = 1.5f; // Adjust this value to control overall intensity
+    public float smoothingFactor = 0.3f; // Adjust this value to control smoothing (0.1f to 0.5f)
+
+    private float _previousNormalizedPos;
+    
     private Vector3 _noseTopPos;
 
     private Vector3 _noseBottomPos;
@@ -488,15 +494,13 @@ public class IrisTracker : MonoBehaviour
         float rawNormalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
 
         // Apply smoothing
-        float normalizedPos = Mathf.Lerp(previousNormalizedPos, rawNormalizedPos, smoothingFactor);
-        previousNormalizedPos = normalizedPos;
+        float normalizedPos = Mathf.Lerp(_previousNormalizedPos, rawNormalizedPos, smoothingFactor);
+        _previousNormalizedPos = normalizedPos;
 
         print("Initial normalized pos: " + normalizedPos);
 
         if (Mathf.Abs(normalizedPos) < deadzoneInOut)
-        {
             return 0f;
-        }
         else
         {
             // Adjust the normalized position to account for the dead-zone
@@ -504,7 +508,7 @@ public class IrisTracker : MonoBehaviour
         }
 
         // Calculate head rotation factor (-1 to 1)
-        float maxHeadRotation = 35f;
+        
         float headRotationFactor = Mathf.Clamp(headYRotation / maxHeadRotation, -1f, 1f);
 
         print("headYRotation: " + headYRotation);
@@ -520,7 +524,7 @@ public class IrisTracker : MonoBehaviour
         print("After offset: " + normalizedPos);
 
         // Increase intensity of rotation
-        float intensityFactor = 1.5f; // Adjust this value to control overall intensity
+        
         normalizedPos *= intensityFactor;
 
         // Apply non-linear adjustment to enhance extremes
@@ -539,9 +543,6 @@ public class IrisTracker : MonoBehaviour
 
         return clampedPos;
     }
-    
-    private float previousNormalizedPos = 0f;
-    private float smoothingFactor = 0.3f; // Adjust this value to control smoothing (0.1f to 0.5f)
     
     private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
     {
