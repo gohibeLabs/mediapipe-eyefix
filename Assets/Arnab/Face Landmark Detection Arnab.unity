@@ -1485,6 +1485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8662b068ccda4264b5957f20dafeff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headBone: {fileID: 8643892706234282813}
   leftEyeBone: {fileID: 7239528559178966543}
   rightEyeBone: {fileID: 5305259353775361222}
   leftEyeAngleRangeInOut: daffffff27000000
@@ -2707,6 +2708,12 @@ RectTransform:
 --- !u!1 &8643892706234282812 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3866931742885030211, guid: 59af3253048b8488eb19e7d6bfcde52f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4782646267672468095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8643892706234282813 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7146606496219205185, guid: 59af3253048b8488eb19e7d6bfcde52f,
     type: 3}
   m_PrefabInstance: {fileID: 4782646267672468095}
   m_PrefabAsset: {fileID: 0}

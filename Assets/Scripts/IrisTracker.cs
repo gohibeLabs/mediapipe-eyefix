@@ -355,6 +355,8 @@ public class IrisTracker : MonoBehaviour
 
     public static IrisTracker Instance;
 
+    [SerializeField] private Transform headBone;
+    
     [SerializeField] private Transform leftEyeBone;
 
     [SerializeField] private Transform rightEyeBone;
@@ -449,7 +451,7 @@ public class IrisTracker : MonoBehaviour
         Vector2 innerPoint2D = new Vector2(trackedEyeData.InnerMost.x, trackedEyeData.InnerMost.z);
         Vector2 outerPoint2D = new Vector2(trackedEyeData.OuterMost.x, trackedEyeData.OuterMost.z);
 
-        float headYRotation = transform.localRotation.eulerAngles.y;
+        float headYRotation = headBone.localRotation.eulerAngles.y;
         headYRotation = (headYRotation > 180) ? headYRotation - 360 : headYRotation;
 
         float trackedEyeAngle = GetIrisBasedAngle(irisCenter2D, innerPoint2D, outerPoint2D, lookingRightSide ? -1f : 1f, headYRotation);
@@ -475,7 +477,7 @@ public class IrisTracker : MonoBehaviour
     //
     //     return new Vector3(0, inOutAngle + yAngleOffset, 0);
     // }
-
+    
     private float GetIrisBasedAngle(Vector2 irisCenter, Vector2 innerPoint, Vector2 outerPoint, float dirSign, float headYRotation)
     {
         var distHalf = Vector2.Distance(innerPoint, outerPoint) / 2f;
@@ -483,7 +485,11 @@ public class IrisTracker : MonoBehaviour
         var center = (innerPoint + outerPoint) / 2f;
         var projectedIrisPoint = center + Vector2.Dot(irisCenter - center, dir) * dir;
 
-        float normalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
+        float rawNormalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
+
+        // Apply smoothing
+        float normalizedPos = Mathf.Lerp(previousNormalizedPos, rawNormalizedPos, smoothingFactor);
+        previousNormalizedPos = normalizedPos;
 
         print("Initial normalized pos: " + normalizedPos);
 
@@ -497,18 +503,31 @@ public class IrisTracker : MonoBehaviour
             normalizedPos = Mathf.Sign(normalizedPos) * (Mathf.Abs(normalizedPos) - deadzoneInOut) / (1f - deadzoneInOut);
         }
 
-        // Calculate head rotation factor (0 to 1)
+        // Calculate head rotation factor (-1 to 1)
         float maxHeadRotation = 35f;
-        float headRotationFactor = Mathf.Clamp01(Mathf.Abs(headYRotation) / maxHeadRotation);
+        float headRotationFactor = Mathf.Clamp(headYRotation / maxHeadRotation, -1f, 1f);
+
+        print("headYRotation: " + headYRotation);
+        print("headRotationFactor: " + headRotationFactor);
 
         // Calculate offset based on head rotation
-        float offset = headRotationFactor * Mathf.Sign(headYRotation);
+        float offset = headRotationFactor * 0.3f; // Increased offset strength
 
-        // Apply offset
-        normalizedPos -= offset;
+        // Apply offset with a smooth transition
+        float offsetFactor = Mathf.Abs(normalizedPos) * 2.5f; // Increased offset effect
+        normalizedPos += offset * offsetFactor;
 
-        // Calculate multiplier based on head rotation (1 to 2)
-        float multiplier = 1f + headRotationFactor;
+        print("After offset: " + normalizedPos);
+
+        // Increase intensity of rotation
+        float intensityFactor = 1.5f; // Adjust this value to control overall intensity
+        normalizedPos *= intensityFactor;
+
+        // Apply non-linear adjustment to enhance extremes
+        normalizedPos = Mathf.Sign(normalizedPos) * Mathf.Pow(Mathf.Abs(normalizedPos), 0.8f);
+
+        // Calculate multiplier based on head rotation (1 to 1.5)
+        float multiplier = 1f + Mathf.Abs(headRotationFactor) * 0.5f;
 
         // Apply multiplier to enhance sensitivity
         normalizedPos *= multiplier;
@@ -520,6 +539,9 @@ public class IrisTracker : MonoBehaviour
 
         return clampedPos;
     }
+    
+    private float previousNormalizedPos = 0f;
+    private float smoothingFactor = 0.3f; // Adjust this value to control smoothing (0.1f to 0.5f)
     
     private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
     {
