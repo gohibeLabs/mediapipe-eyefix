@@ -1495,6 +1495,9 @@ MonoBehaviour:
   deadzoneInOut: 0.085
   angleMultiplierUpDown: 60
   angleMultiplierInOut: 78
+  maxHeadRotation: 35
+  intensityFactor: 1.5
+  smoothingFactor: 0.3
 --- !u!137 &1145278805 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2132946940586443567, guid: 59af3253048b8488eb19e7d6bfcde52f,

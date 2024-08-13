@@ -380,7 +380,7 @@ public class IrisTracker : MonoBehaviour
     public float intensityFactor = 1.5f; // Adjust this value to control overall intensity
     public float smoothingFactor = 0.3f; // Adjust this value to control smoothing (0.1f to 0.5f)
 
-    private float _previousNormalizedPos;
+    private float previousNormalizedPos;
     
     private Vector3 _noseTopPos;
 
@@ -474,15 +474,6 @@ public class IrisTracker : MonoBehaviour
         // Apply rotation with half offset to following eye
         ApplyEyeRotation(followingEye, followingEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), followingEyeAngleMaxRange);
     }
-
-    // private Vector3 CalculateInOutEyeRotation(DataStructures.EyeLandMarkData eyeData, float yAngleOffset, float dirSign,
-    //     float horizontalTiltFactor, int[] minMaxAngleRange)
-    // {
-    //     var inOutAngle = Mathf.Clamp(GetIrisBasedAngle(eyeData.IrisCenter, eyeData.InnerMost,
-    //         eyeData.OuterMost, dirSign, angleMultiplierInOut, horizontalTiltFactor), minMaxAngleRange[0], minMaxAngleRange[1]);
-    //
-    //     return new Vector3(0, inOutAngle + yAngleOffset, 0);
-    // }
     
     private float GetIrisBasedAngle(Vector2 irisCenter, Vector2 innerPoint, Vector2 outerPoint, float dirSign, float headYRotation)
     {
@@ -494,54 +485,53 @@ public class IrisTracker : MonoBehaviour
         float rawNormalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
 
         // Apply smoothing
-        float normalizedPos = Mathf.Lerp(_previousNormalizedPos, rawNormalizedPos, smoothingFactor);
-        _previousNormalizedPos = normalizedPos;
+        float normalizedPos = Mathf.Lerp(previousNormalizedPos, rawNormalizedPos, smoothingFactor);
+        previousNormalizedPos = normalizedPos;
 
         print("Initial normalized pos: " + normalizedPos);
 
         if (Mathf.Abs(normalizedPos) < deadzoneInOut)
-            return 0f;
-        else
         {
-            // Adjust the normalized position to account for the dead-zone
-            normalizedPos = Mathf.Sign(normalizedPos) * (Mathf.Abs(normalizedPos) - deadzoneInOut) / (1f - deadzoneInOut);
+            return 0f;
         }
 
+        // Enhance eye rotation at extremes
+        normalizedPos = Mathf.Sign(normalizedPos) * Mathf.Pow(Mathf.Abs(normalizedPos), 0.7f);
+
         // Calculate head rotation factor (-1 to 1)
-        
         float headRotationFactor = Mathf.Clamp(headYRotation / maxHeadRotation, -1f, 1f);
 
-        print("headYRotation: " + headYRotation);
-        print("headRotationFactor: " + headRotationFactor);
+        // Calculate head rotation offset
+        float headOffset = CalculateHeadRotationOffset(headRotationFactor);
 
-        // Calculate offset based on head rotation
-        float offset = headRotationFactor * 0.3f; // Increased offset strength
+        // Combine eye rotation and head offset
+        float combinedPos = normalizedPos + headOffset;
 
-        // Apply offset with a smooth transition
-        float offsetFactor = Mathf.Abs(normalizedPos) * 2.5f; // Increased offset effect
-        normalizedPos += offset * offsetFactor;
+        // Ensure the final value stays within -1 to 1 range
+        float clampedPos = Mathf.Clamp(combinedPos, -1f, 1f);
 
-        print("After offset: " + normalizedPos);
-
-        // Increase intensity of rotation
-        
-        normalizedPos *= intensityFactor;
-
-        // Apply non-linear adjustment to enhance extremes
-        normalizedPos = Mathf.Sign(normalizedPos) * Mathf.Pow(Mathf.Abs(normalizedPos), 0.8f);
-
-        // Calculate multiplier based on head rotation (1 to 1.5)
-        float multiplier = 1f + Mathf.Abs(headRotationFactor) * 0.5f;
-
-        // Apply multiplier to enhance sensitivity
-        normalizedPos *= multiplier;
-
-        // Clamp the final value
-        float clampedPos = Mathf.Clamp(normalizedPos, -1f, 1f);
-
+        print("Head rotation: " + headYRotation);
+        print("Head offset: " + headOffset);
         print("Final normalized pos: " + clampedPos);
 
         return clampedPos;
+    }
+
+    private float CalculateHeadRotationOffset(float headRotationFactor)
+    {
+        // Use a cubic function to create a non-linear offset
+        // This allows for more movement at extreme rotations
+        float baseOffset = Mathf.Sign(headRotationFactor) * Mathf.Pow(Mathf.Abs(headRotationFactor), 3) * 0.5f;
+        
+        // Apply an additional offset for extreme rotations
+        float extremeThreshold = 0.7f; // about 24.5 degrees
+        if (Mathf.Abs(headRotationFactor) > extremeThreshold)
+        {
+            float extremeFactor = (Mathf.Abs(headRotationFactor) - extremeThreshold) / (1 - extremeThreshold);
+            baseOffset += Mathf.Sign(headRotationFactor) * extremeFactor * 0.3f;
+        }
+
+        return -baseOffset; // Negative to counter the head rotation
     }
     
     private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
