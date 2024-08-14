@@ -34,5 +34,7 @@ namespace Arnab.Scripts
         /// <param name="landmark">Input normalized landmark.</param>
         /// <returns>Output Vector3.</returns>
         public static Vector3 ConvertToVector3(NormalizedLandmark landmark) => new(landmark.x, landmark.y, landmark.z);
+        
+        public static Vector2 ConvertToVector2(NormalizedLandmark landmark) => new(landmark.x, landmark.y);
     }
 }

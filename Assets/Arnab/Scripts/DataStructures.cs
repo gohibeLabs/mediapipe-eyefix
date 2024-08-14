@@ -8,13 +8,21 @@ namespace Arnab.Scripts
     /// </summary>
     public static class DataStructures
     {
+        public struct FacialIrisTrackPointIndices
+        {
+            public Transform FaceNoseTopPos;
+            public Transform FaceNoseBottomPos;
+            public EyeLandMarkData LeftIrisData;
+            public EyeLandMarkData RightIrisData;
+        }
+        
         public struct EyeLandMarkData
         {
-            public Vector3 IrisCenter;
-            public Vector3 InnerMost;
-            public Vector3 OuterMost;
-            public Vector3 TopMost;
-            public Vector3 BottomMost;
+            public Transform IrisCenter;
+            public Transform InnerMost;
+            public Transform OuterMost;
+            public Transform TopMost;
+            public Transform BottomMost;
         }
         
         [System.Serializable]

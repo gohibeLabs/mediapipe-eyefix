@@ -343,10 +343,8 @@
 //     #endregion Methods
 // }
 
-using System.Collections.Generic;
 using Arnab.Scripts;
 using UnityEngine;
-using Mediapipe.Tasks.Components.Containers;
 using PimDeWitte.UnityMainThreadDispatcher;
 
 public class IrisTracker : MonoBehaviour
@@ -354,7 +352,7 @@ public class IrisTracker : MonoBehaviour
     #region Fields & References
 
     public static IrisTracker Instance;
-
+    
     [SerializeField] private Transform headBone;
     
     [SerializeField] private Transform leftEyeBone;
@@ -364,10 +362,10 @@ public class IrisTracker : MonoBehaviour
     [SerializeField] [Range(-70, 70)] private int[] leftEyeAngleRangeInOut = {-38, 39};
 
     [SerializeField] [Range(-70, 70)] private int[] rightEyeAngleRangeInOut = {-39, 38};
+    
+    [SerializeField] [Range(-30, 30)] private int[] bothEyesAngleRangeUpDown = {-25, 30};
 
     [SerializeField] [Range(-20, 20)] private float leftEyeOffsetFromRightEye = -15f;
-
-    [SerializeField] [Range(-30, 30)] private int[] bothEyeAngleRangeUpDown = {-25, 30};
     
     // Apply a small deadzone
     [SerializeField] [Range(-0.2f, 0.2f)] private float deadzoneInOut = 0.08f;
@@ -386,21 +384,6 @@ public class IrisTracker : MonoBehaviour
 
     private Vector3 _noseBottomPos;
 
-    private const int NoseTopIndex = 6; 
-    private const int NoseBottomIndex = 2; 
-
-    private const int LeftIrisIndex = 473; 
-    private const int LeftEyeInnerMostIndex = 362; 
-    private const int LeftEyeOuterMostIndex = 263; 
-    private const int LeftEyeTopMostIndex = 386; 
-    private const int LeftEyeBottomMostIndex = 374; 
-
-    private const int RightIrisIndex = 468; 
-    private const int RightEyeInnerMostIndex = 133; 
-    private const int RightEyeOuterMostIndex = 33; 
-    private const int RightEyeTopMostIndex = 159; 
-    private const int RightEyeBottomMostIndex = 145; 
-
     #endregion Fields & References
 
     #region Methods
@@ -413,157 +396,126 @@ public class IrisTracker : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void TrackIrisMovement(List<NormalizedLandmarks> faceLandmarks)
+    public void TrackIrisMovement(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
-        if (faceLandmarks == null || faceLandmarks.Count == 0)
-        {
-            Debug.Log("No face landmarks detected.");
-            return;
-        }
-
-        var landmarks = faceLandmarks[0].landmarks.ToArray();
-
-        _noseTopPos = Utilities.ConvertToVector3(landmarks[NoseTopIndex]);
-        _noseBottomPos = Utilities.ConvertToVector3(landmarks[NoseBottomIndex]);
-
-        var leftEyeData = GetEyeData(landmarks, LeftIrisIndex, LeftEyeInnerMostIndex, LeftEyeOuterMostIndex,
-            LeftEyeTopMostIndex, LeftEyeBottomMostIndex);
-
-        var rightEyeData = GetEyeData(landmarks, RightIrisIndex, RightEyeInnerMostIndex, RightEyeOuterMostIndex,
-            RightEyeTopMostIndex, RightEyeBottomMostIndex);
-
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
-            ApplyEyeRotations(leftEyeData, rightEyeData, _noseTopPos, _noseBottomPos);
+            ApplyEyeRotations(face2DPoints);
         });
     }
 
-    private void ApplyEyeRotations(DataStructures.EyeLandMarkData leftEyeData, DataStructures.EyeLandMarkData rightEyeData,
-        Vector3 noseTopPos, Vector3 noseBottomPos)
-    {
-        var (_, _, horizontalSign, _) = CalculateTiltFactors(noseTopPos, noseBottomPos,
-            leftEyeData.OuterMost, rightEyeData.OuterMost);
+    // private void ApplyEyeRotations(DataStructures.EyeLandMarkData leftEyeData, DataStructures.EyeLandMarkData rightEyeData,
+    //     Vector3 noseTopPos, Vector3 noseBottomPos)
+    // {
+    //     var (_, _, horizontalSign, _) = CalculateTiltFactors(noseTopPos, noseBottomPos,
+    //         leftEyeData.OuterMost, rightEyeData.OuterMost);
+    //
+    //     var lookingRightSide = horizontalSign > 0;
+    //
+    //     var trackedEye = lookingRightSide ? leftEyeBone : rightEyeBone;
+    //     var trackedEyeData = lookingRightSide ? leftEyeData : rightEyeData;
+    //     var trackedEyeAngleMaxRange = lookingRightSide ? leftEyeAngleRangeInOut : rightEyeAngleRangeInOut;
+    //
+    //     var followingEye = lookingRightSide ? rightEyeBone : leftEyeBone;
+    //     var followingEyeAngleMaxRange = lookingRightSide ? rightEyeAngleRangeInOut : leftEyeAngleRangeInOut;
+    //
+    //     Vector2 irisCenter2D = new Vector2(trackedEyeData.IrisCenter.x, trackedEyeData.IrisCenter.z);
+    //     Vector2 innerPoint2D = new Vector2(trackedEyeData.InnerMost.x, trackedEyeData.InnerMost.z);
+    //     Vector2 outerPoint2D = new Vector2(trackedEyeData.OuterMost.x, trackedEyeData.OuterMost.z);
+    //
+    //     float headYRotation = headBone.localRotation.eulerAngles.y;
+    //     headYRotation = (headYRotation > 180) ? headYRotation - 360 : headYRotation;
+    //
+    //     float trackedEyeAngle = GetIrisBasedAngle(irisCenter2D, innerPoint2D, outerPoint2D, lookingRightSide ? -1f : 1f, headYRotation);
+    //
+    //     // Calculate half offset
+    //     float halfOffset = leftEyeOffsetFromRightEye / 2f;
+    //
+    //     // Apply rotation with half offset to tracked eye
+    //     ApplyEyeRotation(trackedEye, trackedEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), trackedEyeAngleMaxRange);
+    //
+    //     // Calculate following eye angle with full offset
+    //     float followingEyeAngle = trackedEyeAngle + (lookingRightSide ? leftEyeOffsetFromRightEye : -leftEyeOffsetFromRightEye);
+    //
+    //     // Apply rotation with half offset to following eye
+    //     ApplyEyeRotation(followingEye, followingEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), followingEyeAngleMaxRange);
+    // }
 
-        var lookingRightSide = horizontalSign > 0;
-
-        var trackedEye = lookingRightSide ? leftEyeBone : rightEyeBone;
-        var trackedEyeData = lookingRightSide ? leftEyeData : rightEyeData;
-        var trackedEyeAngleMaxRange = lookingRightSide ? leftEyeAngleRangeInOut : rightEyeAngleRangeInOut;
-
-        var followingEye = lookingRightSide ? rightEyeBone : leftEyeBone;
-        var followingEyeAngleMaxRange = lookingRightSide ? rightEyeAngleRangeInOut : leftEyeAngleRangeInOut;
-
-        Vector2 irisCenter2D = new Vector2(trackedEyeData.IrisCenter.x, trackedEyeData.IrisCenter.z);
-        Vector2 innerPoint2D = new Vector2(trackedEyeData.InnerMost.x, trackedEyeData.InnerMost.z);
-        Vector2 outerPoint2D = new Vector2(trackedEyeData.OuterMost.x, trackedEyeData.OuterMost.z);
-
-        float headYRotation = headBone.localRotation.eulerAngles.y;
-        headYRotation = (headYRotation > 180) ? headYRotation - 360 : headYRotation;
-
-        float trackedEyeAngle = GetIrisBasedAngle(irisCenter2D, innerPoint2D, outerPoint2D, lookingRightSide ? -1f : 1f, headYRotation);
-
-        // Calculate half offset
-        float halfOffset = leftEyeOffsetFromRightEye / 2f;
-
-        // Apply rotation with half offset to tracked eye
-        ApplyEyeRotation(trackedEye, trackedEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), trackedEyeAngleMaxRange);
+    public Transform noseTop;
+    public Transform noseBottom;
+    public Transform leftIrisCenter;
+    public Transform leftEyeInner;
+    public Transform leftEyeOuter;
+    public Transform leftEyeTop;
+    public Transform leftEyeBottom;
+    public Transform rightIrisCenter;
+    public Transform rightEyeInner;
+    public Transform rightEyeOuter;
+    public Transform rightEyeTop;
+    public Transform rightEyeBottom;
     
-        // Calculate following eye angle with full offset
-        float followingEyeAngle = trackedEyeAngle + (lookingRightSide ? leftEyeOffsetFromRightEye : -leftEyeOffsetFromRightEye);
-    
-        // Apply rotation with half offset to following eye
-        ApplyEyeRotation(followingEye, followingEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), followingEyeAngleMaxRange);
-    }
-    
-    private float GetIrisBasedAngle(Vector2 irisCenter, Vector2 innerPoint, Vector2 outerPoint, float dirSign, float headYRotation)
+    private void ApplyEyeRotations(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
-        var distHalf = Vector2.Distance(innerPoint, outerPoint) / 2f;
-        var dir = (outerPoint - innerPoint).normalized * dirSign;
-        var center = (innerPoint + outerPoint) / 2f;
-        var projectedIrisPoint = center + Vector2.Dot(irisCenter - center, dir) * dir;
-
-        float rawNormalizedPos = Vector2.Dot(projectedIrisPoint - center, dir) / distHalf;
-
-        // Apply smoothing
-        float normalizedPos = Mathf.Lerp(previousNormalizedPos, rawNormalizedPos, smoothingFactor);
-        previousNormalizedPos = normalizedPos;
-
-        print("Initial normalized pos: " + normalizedPos);
-
-        if (Mathf.Abs(normalizedPos) < deadzoneInOut)
-        {
-            return 0f;
-        }
-
-        // Enhance eye rotation at extremes
-        normalizedPos = Mathf.Sign(normalizedPos) * Mathf.Pow(Mathf.Abs(normalizedPos), 0.7f);
-
-        // Calculate head rotation factor (-1 to 1)
-        float headRotationFactor = Mathf.Clamp(headYRotation / maxHeadRotation, -1f, 1f);
-
-        // Calculate head rotation offset
-        float headOffset = CalculateHeadRotationOffset(headRotationFactor);
-
-        // Combine eye rotation and head offset
-        float combinedPos = normalizedPos + headOffset;
-
-        // Ensure the final value stays within -1 to 1 range
-        float clampedPos = Mathf.Clamp(combinedPos, -1f, 1f);
-
-        print("Head rotation: " + headYRotation);
-        print("Head offset: " + headOffset);
-        print("Final normalized pos: " + clampedPos);
-
-        return clampedPos;
-    }
-
-    private float CalculateHeadRotationOffset(float headRotationFactor)
-    {
-        // Use a cubic function to create a non-linear offset
-        // This allows for more movement at extreme rotations
-        float baseOffset = Mathf.Sign(headRotationFactor) * Mathf.Pow(Mathf.Abs(headRotationFactor), 3) * 0.5f;
+        var noseTopPos = face2DPoints.FaceNoseTopPos;
+        var noseBottomPos = face2DPoints.FaceNoseBottomPos;
+        var leftEyeData = face2DPoints.LeftIrisData;
+        var rightEyeData = face2DPoints.RightIrisData;
         
-        // Apply an additional offset for extreme rotations
-        float extremeThreshold = 0.7f; // about 24.5 degrees
-        if (Mathf.Abs(headRotationFactor) > extremeThreshold)
-        {
-            float extremeFactor = (Mathf.Abs(headRotationFactor) - extremeThreshold) / (1 - extremeThreshold);
-            baseOffset += Mathf.Sign(headRotationFactor) * extremeFactor * 0.3f;
-        }
+        noseTop = noseTopPos;
+        noseBottom = noseBottomPos;
+        
+        leftIrisCenter = leftEyeData.IrisCenter;
+        leftEyeInner = leftEyeData.InnerMost;
+        leftEyeOuter = leftEyeData.OuterMost;
+        leftEyeTop = leftEyeData.TopMost;
+        leftEyeBottom = leftEyeData.BottomMost;
+        
+        rightIrisCenter = rightEyeData.IrisCenter;
+        rightEyeInner = rightEyeData.InnerMost;
+        rightEyeOuter = rightEyeData.OuterMost;
+        rightEyeTop = rightEyeData.TopMost;
+        rightEyeBottom = rightEyeData.BottomMost;
 
-        return -baseOffset; // Negative to counter the head rotation
+        var leftEyeAngle = GetIrisBasedAngle(leftIrisCenter.position, leftEyeInner.position, leftEyeOuter.position, leftEyeTop.position, leftEyeBottom.position);
+        var rightEyeAngle = GetIrisBasedAngle(rightIrisCenter.position, rightEyeInner.position, rightEyeOuter.position, rightEyeTop.position, rightEyeBottom.position);
+        
+        print($"normalizedVertical left: {leftEyeAngle.y}");
+        
+        rightEyeAngle.y = leftEyeAngle.y;
+
+        // Apply rotation with half offset to left eye
+        ApplyEyeRotation(leftEyeBone, leftEyeAngle * angleMultiplierInOut, leftEyeAngleRangeInOut, bothEyesAngleRangeUpDown);
+
+        // Apply rotation with half offset to right eye
+        ApplyEyeRotation(rightEyeBone, rightEyeAngle * angleMultiplierInOut, rightEyeAngleRangeInOut, bothEyesAngleRangeUpDown);
     }
     
-    private void ApplyEyeRotation(Transform eyeBone, float normalizedAngle, int[] angleRange)
+    private Vector2 GetIrisBasedAngle(Vector2 irisCenter, Vector2 innerPoint, Vector2 outerPoint, Vector2 topPoint, Vector2 bottomPoint)
     {
-        float targetAngle = Mathf.Lerp(angleRange[0], angleRange[1], (normalizedAngle + 1f) / 2f);
-        Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+        // Horizontal calculation
+        float eyeWidth = Vector2.Distance(innerPoint, outerPoint);
+        Vector2 eyeHorizontalDir = (outerPoint - innerPoint).normalized;
+        Vector2 eyeCenter = (innerPoint + outerPoint) / 2f;
+        float horizontalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeHorizontalDir);
+        float normalizedHorizontal = horizontalOffset / (eyeWidth / 2f);
+
+        // Vertical calculation
+        float eyeHeight = Vector2.Distance(topPoint, bottomPoint);
+        Vector2 eyeVerticalDir = (topPoint - bottomPoint).normalized;
+        eyeCenter = (topPoint + bottomPoint) / 2f;
+        float verticalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeVerticalDir);
+        float normalizedVertical = verticalOffset / (eyeHeight / 2f);
+
+        return new Vector2(normalizedHorizontal, normalizedVertical * angleMultiplierUpDown);
+    }
+    
+    private void ApplyEyeRotation(Transform eyeBone, Vector2 normalizedAngle, int[] angleRangeHorizontal, int[] angleRangeVertical)
+    {
+        float horizontalAngle = Mathf.Lerp(angleRangeHorizontal[0], angleRangeHorizontal[1], (normalizedAngle.x + 1f) / 2f);
+        float verticalAngle = Mathf.Lerp(angleRangeVertical[0], angleRangeVertical[1], (normalizedAngle.y + 1f) / 2f);
+    
+        Quaternion targetRotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0f);
         eyeBone.localRotation = Quaternion.Slerp(eyeBone.localRotation, targetRotation, Time.deltaTime * 15f);
-    }
-
-    private (float verticalTiltFactor, float horizontalTiltFactor, float horizontalSign, float verticalSign)
-        CalculateTiltFactors(Vector3 noseTop, Vector3 noseBottom, Vector3 leftEye, Vector3 rightEye)
-    {
-        // Only calculate horizontal tilt for now
-        var eyeDir = (rightEye - leftEye).normalized;
-        var rightVector = Vector3.right;
-        var horizontalTiltSignedAngle = Vector3.SignedAngle(eyeDir, rightVector, Vector3.up);
-        var horizontalSign = Mathf.Sign(horizontalTiltSignedAngle);
-
-        // Set vertical factors to neutral values
-        return (0f, 1f, -horizontalSign, 1f);
-    }
-
-    private DataStructures.EyeLandMarkData GetEyeData(NormalizedLandmark[] landmarks, params int[] indices)
-    {
-        return new DataStructures.EyeLandMarkData
-        {
-            IrisCenter = Utilities.ConvertToVector3(landmarks[indices[0]]),
-            InnerMost = Utilities.ConvertToVector3(landmarks[indices[1]]),
-            OuterMost = Utilities.ConvertToVector3(landmarks[indices[2]]),
-            TopMost = Utilities.ConvertToVector3(landmarks[indices[3]]),
-            BottomMost = Utilities.ConvertToVector3(landmarks[indices[4]])
-        };
     }
 
     #endregion Methods

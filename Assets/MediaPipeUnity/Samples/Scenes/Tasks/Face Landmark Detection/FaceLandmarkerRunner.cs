@@ -6,20 +6,18 @@
 
 using System.Collections;
 using Mediapipe;
-using Mediapipe.Tasks.Components.Containers;
 using Mediapipe.Tasks.Vision.FaceLandmarker;
 using Mediapipe.Unity;
 using Mediapipe.Unity.Sample;
 using Mediapipe.Unity.Sample.FaceLandmarkDetection;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
 namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
 {
     public class FaceLandmarkerRunner : VisionTaskApiRunner<FaceLandmarker>
     {
-        [FormerlySerializedAs("_faceLandmarkerResultAnnotationController")] [SerializeField] private FaceLandmarkerResultAnnotationController faceLandmarkerResultAnnotationController;
+        [SerializeField] private FaceLandmarkerResultAnnotationController faceLandmarkerResultAnnotationController;
 
         private Mediapipe.Unity.Experimental.TextureFramePool _textureFramePool;
 
@@ -132,12 +130,12 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
             var data = result.faceBlendshapes[0];
             ExpressionApplier.Instance.ApplyDataOnFace(data);
             ExpressionApplier.Instance.SetFaceRotation(result.facialTransformationMatrixes);
-            IrisTracker.Instance.TrackIrisMovement(result.faceLandmarks);
+            // IrisTracker.Instance.TrackIrisMovement(result.faceLandmarks);
             //foreach(Category cat in data.categories)
             //{
             //    Debug.Log("BS " + cat.categoryName + " Score = " + (cat.score * 100));
             //}
-            //_faceLandmarkerResultAnnotationController.DrawLater(result);
+            faceLandmarkerResultAnnotationController.DrawLater(result);
         }
     }
 }
