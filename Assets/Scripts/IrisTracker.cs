@@ -453,9 +453,46 @@ public class IrisTracker : MonoBehaviour
     public Transform rightEyeOuter;
     public Transform rightEyeTop;
     public Transform rightEyeBottom;
+
+    private void DebugShowPoints(DataStructures.FacialIrisTrackPointIndices face2DPoints)
+    {
+        var noseTopPos = face2DPoints.FaceNoseTopPos;
+        var noseBottomPos = face2DPoints.FaceNoseBottomPos;
+        var leftEyeData = face2DPoints.LeftIrisData;
+        var rightEyeData = face2DPoints.RightIrisData;
+
+        if (!noseTopPos.GetComponent<MeshRenderer>().enabled)
+            noseTopPos.GetComponent<MeshRenderer>().enabled = true;
+        if (!noseBottomPos.GetComponent<MeshRenderer>().enabled)
+            noseBottomPos.GetComponent<MeshRenderer>().enabled = true;
+        
+        if (!leftEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled)
+            leftEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled = true;
+        if (!leftEyeData.InnerMost.GetComponent<MeshRenderer>().enabled)
+            leftEyeData.InnerMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!leftEyeData.OuterMost.GetComponent<MeshRenderer>().enabled)
+            leftEyeData.OuterMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
+            leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
+            leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
+        
+        if (!rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled)
+            rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled = true;
+        if (!rightEyeData.InnerMost.GetComponent<MeshRenderer>().enabled)
+            rightEyeData.InnerMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!rightEyeData.OuterMost.GetComponent<MeshRenderer>().enabled)
+            rightEyeData.OuterMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
+            rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
+        if (!rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
+            rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
+    }
     
     private void ApplyEyeRotations(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
+        DebugShowPoints(face2DPoints);
+        
         var noseTopPos = face2DPoints.FaceNoseTopPos;
         var noseBottomPos = face2DPoints.FaceNoseBottomPos;
         var leftEyeData = face2DPoints.LeftIrisData;
@@ -475,6 +512,8 @@ public class IrisTracker : MonoBehaviour
         rightEyeOuter = rightEyeData.OuterMost;
         rightEyeTop = rightEyeData.TopMost;
         rightEyeBottom = rightEyeData.BottomMost;
+        
+        
 
         var leftEyeAngle = GetIrisBasedAngle(leftIrisCenter.position, leftEyeInner.position, leftEyeOuter.position, leftEyeTop.position, leftEyeBottom.position);
         var rightEyeAngle = GetIrisBasedAngle(rightIrisCenter.position, rightEyeInner.position, rightEyeOuter.position, rightEyeTop.position, rightEyeBottom.position);
