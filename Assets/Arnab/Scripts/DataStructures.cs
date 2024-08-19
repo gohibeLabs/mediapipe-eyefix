@@ -21,8 +21,10 @@ namespace Arnab.Scripts
             public Transform IrisCenter;
             public Transform InnerMost;
             public Transform OuterMost;
-            public Transform TopMost;
-            public Transform BottomMost;
+            // public Transform TopMost;
+            // public Transform BottomMost;
+            public Transform[] TopMostPoints;
+            public Transform[] BottomMostPoints;
         }
         
         [System.Serializable]

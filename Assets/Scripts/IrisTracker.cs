@@ -343,6 +343,7 @@
 //     #endregion Methods
 // }
 
+using System.Collections.Generic;
 using Arnab.Scripts;
 using UnityEngine;
 using PimDeWitte.UnityMainThreadDispatcher;
@@ -363,7 +364,7 @@ public class IrisTracker : MonoBehaviour
 
     [SerializeField] [Range(-70, 70)] private int[] rightEyeAngleRangeInOut = {-39, 38};
     
-    [SerializeField] [Range(-30, 30)] private int[] bothEyesAngleRangeUpDown = {-25, 30};
+    [SerializeField] [Range(-90, 90)] private int[] bothEyesAngleRangeUpDown = {-25, 30};
 
     [SerializeField] [Range(-20, 20)] private float leftEyeOffsetFromRightEye = -15f;
     
@@ -446,13 +447,23 @@ public class IrisTracker : MonoBehaviour
     public Transform leftIrisCenter;
     public Transform leftEyeInner;
     public Transform leftEyeOuter;
-    public Transform leftEyeTop;
-    public Transform leftEyeBottom;
+    // public Transform leftEyeTop;
+    // public Transform leftEyeBottom;
+    public Transform[] leftEyeTopPoints;
+    public Transform[] leftEyeBottomPoints;
     public Transform rightIrisCenter;
     public Transform rightEyeInner;
     public Transform rightEyeOuter;
-    public Transform rightEyeTop;
-    public Transform rightEyeBottom;
+    // public Transform rightEyeTop;
+    // public Transform rightEyeBottom;
+    public Transform[] rightEyeTopPoints;
+    public Transform[] rightEyeBottomPoints;
+
+    private Transform _currentLeftEyeNearestTopPoint;
+    private Transform _currentLeftEyeNearestBottomPoint;
+    
+    private Transform _currentRightEyeNearestTopPoint;
+    private Transform _currentRightEyeNearestBottomPoint;
 
     private void DebugShowPoints(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
@@ -472,10 +483,21 @@ public class IrisTracker : MonoBehaviour
             leftEyeData.InnerMost.GetComponent<MeshRenderer>().enabled = true;
         if (!leftEyeData.OuterMost.GetComponent<MeshRenderer>().enabled)
             leftEyeData.OuterMost.GetComponent<MeshRenderer>().enabled = true;
-        if (!leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
-            leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
-        if (!leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
-            leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
+
+        foreach (var point in leftEyeData.TopMostPoints)
+        {
+            if (!point.GetComponent<MeshRenderer>().enabled)
+                point.GetComponent<MeshRenderer>().enabled = true;
+        }
+        foreach (var point in leftEyeData.BottomMostPoints)
+        {
+            if (!point.GetComponent<MeshRenderer>().enabled)
+                point.GetComponent<MeshRenderer>().enabled = true;
+        }
+        // if (!leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
+        //     leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
+        // if (!leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
+        //     leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
         
         if (!rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled)
             rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled = true;
@@ -483,10 +505,56 @@ public class IrisTracker : MonoBehaviour
             rightEyeData.InnerMost.GetComponent<MeshRenderer>().enabled = true;
         if (!rightEyeData.OuterMost.GetComponent<MeshRenderer>().enabled)
             rightEyeData.OuterMost.GetComponent<MeshRenderer>().enabled = true;
-        if (!rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
-            rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
-        if (!rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
-            rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
+        
+        foreach (var point in rightEyeData.TopMostPoints)
+        {
+            if (!point.GetComponent<MeshRenderer>().enabled)
+                point.GetComponent<MeshRenderer>().enabled = true;
+        }
+        foreach (var point in rightEyeData.BottomMostPoints)
+        {
+            if (!point.GetComponent<MeshRenderer>().enabled)
+                point.GetComponent<MeshRenderer>().enabled = true;
+        }
+        // if (!rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
+        //     rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
+        // if (!rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
+        //     rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    private void GetNearestVerticalPoints()
+    {
+        if (leftIrisCenter)
+        {
+            _currentLeftEyeNearestTopPoint = GetClosest(leftIrisCenter.position, leftEyeTopPoints);
+            _currentLeftEyeNearestBottomPoint = GetClosest(leftIrisCenter.position, leftEyeBottomPoints);
+        }
+
+        if (rightIrisCenter)
+        {
+            _currentRightEyeNearestTopPoint = GetClosest(rightIrisCenter.position, rightEyeTopPoints);
+            _currentRightEyeNearestBottomPoint = GetClosest(rightIrisCenter.position, rightEyeBottomPoints);
+        }
+    }
+
+    private static Transform GetClosest(Vector3 startPosition, Transform[] points)
+    {
+        Transform bestTarget = null;
+        var closestDistanceSqr = Mathf.Infinity;
+
+        foreach (var potentialTarget in points)
+        {
+            var directionToTarget = potentialTarget.transform.position - startPosition;
+
+            var dSqrToTarget = directionToTarget.sqrMagnitude;
+
+            if (dSqrToTarget < closestDistanceSqr)
+            {
+                closestDistanceSqr = dSqrToTarget;
+                bestTarget = potentialTarget;
+            }
+        }
+        return bestTarget;
     }
     
     private void ApplyEyeRotations(DataStructures.FacialIrisTrackPointIndices face2DPoints)
@@ -504,19 +572,25 @@ public class IrisTracker : MonoBehaviour
         leftIrisCenter = leftEyeData.IrisCenter;
         leftEyeInner = leftEyeData.InnerMost;
         leftEyeOuter = leftEyeData.OuterMost;
-        leftEyeTop = leftEyeData.TopMost;
-        leftEyeBottom = leftEyeData.BottomMost;
+        // leftEyeTop = leftEyeData.TopMost;
+        // leftEyeBottom = leftEyeData.BottomMost;
+        leftEyeTopPoints = leftEyeData.TopMostPoints;
+        leftEyeBottomPoints = leftEyeData.BottomMostPoints;
         
         rightIrisCenter = rightEyeData.IrisCenter;
         rightEyeInner = rightEyeData.InnerMost;
         rightEyeOuter = rightEyeData.OuterMost;
-        rightEyeTop = rightEyeData.TopMost;
-        rightEyeBottom = rightEyeData.BottomMost;
-        
-        
+        // rightEyeTop = rightEyeData.TopMost;
+        // rightEyeBottom = rightEyeData.BottomMost;
+        rightEyeTopPoints = rightEyeData.TopMostPoints;
+        rightEyeBottomPoints = rightEyeData.BottomMostPoints;
 
-        var leftEyeAngle = GetIrisBasedAngle(leftIrisCenter.position, leftEyeInner.position, leftEyeOuter.position, leftEyeTop.position, leftEyeBottom.position);
-        var rightEyeAngle = GetIrisBasedAngle(rightIrisCenter.position, rightEyeInner.position, rightEyeOuter.position, rightEyeTop.position, rightEyeBottom.position);
+        GetNearestVerticalPoints();
+
+        var leftEyeAngle = GetIrisBasedAngle(leftIrisCenter.position, leftEyeInner.position, leftEyeOuter.position,
+            _currentLeftEyeNearestTopPoint.position, _currentLeftEyeNearestBottomPoint.position);
+        var rightEyeAngle = GetIrisBasedAngle(rightIrisCenter.position, rightEyeInner.position, rightEyeOuter.position,
+            _currentLeftEyeNearestTopPoint.position, _currentRightEyeNearestBottomPoint.position);
         
         print($"normalizedVertical left: {leftEyeAngle.y}");
         
@@ -532,28 +606,28 @@ public class IrisTracker : MonoBehaviour
     private Vector2 GetIrisBasedAngle(Vector2 irisCenter, Vector2 innerPoint, Vector2 outerPoint, Vector2 topPoint, Vector2 bottomPoint)
     {
         // Horizontal calculation
-        float eyeWidth = Vector2.Distance(innerPoint, outerPoint);
-        Vector2 eyeHorizontalDir = (outerPoint - innerPoint).normalized;
-        Vector2 eyeCenter = (innerPoint + outerPoint) / 2f;
-        float horizontalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeHorizontalDir);
-        float normalizedHorizontal = horizontalOffset / (eyeWidth / 2f);
+        var eyeWidth = Vector2.Distance(innerPoint, outerPoint);
+        var eyeHorizontalDir = (outerPoint - innerPoint).normalized;
+        var eyeCenter = (innerPoint + outerPoint) / 2f;
+        var horizontalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeHorizontalDir);
+        var normalizedHorizontal = horizontalOffset / (eyeWidth / 2f);
 
         // Vertical calculation
-        float eyeHeight = Vector2.Distance(topPoint, bottomPoint);
-        Vector2 eyeVerticalDir = (topPoint - bottomPoint).normalized;
+        var eyeHeight = Vector2.Distance(topPoint, bottomPoint);
+        var eyeVerticalDir = (topPoint - bottomPoint).normalized;
         eyeCenter = (topPoint + bottomPoint) / 2f;
-        float verticalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeVerticalDir);
-        float normalizedVertical = verticalOffset / (eyeHeight / 2f);
+        var verticalOffset = Vector2.Dot(irisCenter - eyeCenter, eyeVerticalDir);
+        var normalizedVertical = verticalOffset / (eyeHeight / 2f);
 
         return new Vector2(normalizedHorizontal, normalizedVertical * angleMultiplierUpDown);
     }
     
     private void ApplyEyeRotation(Transform eyeBone, Vector2 normalizedAngle, int[] angleRangeHorizontal, int[] angleRangeVertical)
     {
-        float horizontalAngle = Mathf.Lerp(angleRangeHorizontal[0], angleRangeHorizontal[1], (normalizedAngle.x + 1f) / 2f);
-        float verticalAngle = Mathf.Lerp(angleRangeVertical[0], angleRangeVertical[1], (normalizedAngle.y + 1f) / 2f);
+        var horizontalAngle = Mathf.Lerp(angleRangeHorizontal[0], angleRangeHorizontal[1], (normalizedAngle.x + 1f) / 2f);
+        var verticalAngle = Mathf.Lerp(angleRangeVertical[0], angleRangeVertical[1], (normalizedAngle.y + 1f) / 2f);
     
-        Quaternion targetRotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0f);
+        var targetRotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0f);
         eyeBone.localRotation = Quaternion.Slerp(eyeBone.localRotation, targetRotation, Time.deltaTime * 15f);
     }
 

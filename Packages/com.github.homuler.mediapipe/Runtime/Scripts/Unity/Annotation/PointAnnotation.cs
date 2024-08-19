@@ -20,11 +20,13 @@ namespace Mediapipe.Unity
   {
     [SerializeField] private Color _color = Color.green;
     [SerializeField] private float _radius = 15.0f;
+    public int index;
 
     private void OnEnable()
     {
       ApplyColor(_color);
       ApplyRadius(_radius);
+      index = transform.GetSiblingIndex();
     }
 
     private void OnDisable()
