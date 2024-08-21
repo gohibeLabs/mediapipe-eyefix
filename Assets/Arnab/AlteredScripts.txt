@@ -1,9 +1,7 @@
 Existing classes which were modified:
 - FaceLandmarkerRunner.cs
 - IrisTracker.cs
-- ExpressionApplier.cs
-- BlendShapeSaverEditor.cs
 
-New classes:
+Additional classes:
 -Assets/Arnab/Scripts/Utilities.cs
 -Assets/Arnab/Scripts/DataStructures.cs

@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Collections.Generic;
-using Arnab.Scripts;
 
 public class BlendShapeSaverEditor : EditorWindow
 {
-    private SkinnedMeshRenderer _skinnedMeshRenderer;
-    private string _fileName;
+    private SkinnedMeshRenderer skinnedMeshRenderer;
+    private string fileName;
 
     [MenuItem("Tools/Blend Shape Saver")]
     public static void ShowWindow()
@@ -19,39 +18,41 @@ public class BlendShapeSaverEditor : EditorWindow
     {
         GUILayout.Label("Blend Shape Saver", EditorStyles.boldLabel);
 
-        _skinnedMeshRenderer = (SkinnedMeshRenderer)EditorGUILayout.ObjectField("Skinned Mesh Renderer", _skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true);
-        _fileName = EditorGUILayout.TextField("File Name", _fileName);
+        skinnedMeshRenderer = (SkinnedMeshRenderer)EditorGUILayout.ObjectField("Skinned Mesh Renderer", skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true);
+        fileName = EditorGUILayout.TextField("File Name", fileName);
 
         if (GUILayout.Button("Save Blend Shapes"))
+        {
             SaveBlendShapes();
+        }
     }
 
     private void SaveBlendShapes()
     {
-        if (_skinnedMeshRenderer == null)
+        if (skinnedMeshRenderer == null)
         {
             Debug.LogError("SkinnedMeshRenderer is not assigned.");
             return;
         }
 
-        if (string.IsNullOrEmpty(_fileName))
+        if (string.IsNullOrEmpty(fileName))
         {
             Debug.LogError("File name is not assigned.");
             return;
         }
 
-        var mesh = _skinnedMeshRenderer.sharedMesh;
-        var blendShapeCount = mesh.blendShapeCount;
-        var blendShapeInfos = new List<DataStructures.BlendShapeInfo>();
+        Mesh mesh = skinnedMeshRenderer.sharedMesh;
+        int blendShapeCount = mesh.blendShapeCount;
+        List<BlendShapeInfo> blendShapeInfos = new List<BlendShapeInfo>();
 
-        for (var i = 0; i < blendShapeCount; i++)
+        for (int i = 0; i < blendShapeCount; i++)
         {
-            var blendShapeName = mesh.GetBlendShapeName(i);
-            blendShapeInfos.Add(new DataStructures.BlendShapeInfo { Index = i, Name = blendShapeName });
+            string blendShapeName = mesh.GetBlendShapeName(i);
+            blendShapeInfos.Add(new BlendShapeInfo { Index = i, Name = blendShapeName });
         }
 
-        var json = JsonUtility.ToJson(new DataStructures.BlendShapeList { BlendShapes = blendShapeInfos }, true);
-        var path = Path.Combine(Application.dataPath, _fileName + ".json");
+        string json = JsonUtility.ToJson(new BlendShapeList { BlendShapes = blendShapeInfos }, true);
+        string path = Path.Combine(Application.dataPath, fileName + ".json");
         File.WriteAllText(path, json);
 
         Debug.Log("Blend shapes saved to " + path);

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1488,6 +1488,27 @@ MonoBehaviour:
   headBone: {fileID: 8643892706234282813}
   leftEyeBone: {fileID: 7239528559178966543}
   rightEyeBone: {fileID: 5305259353775361222}
+  LeftEyeInnerMostIndex: 133
+  LeftEyeOuterMostIndex: 33
+  _leftEyeTopMostIndices: 6b00000042000000690000003f000000
+  _leftEyeBottomMostIndices: e7000000e6000000e5000000e4000000
+  RightEyeInnerMostIndex: 362
+  RightEyeOuterMostIndex: 263
+  _rightEyeTopMostIndices: 50010000280100004e01000025010000
+  _rightEyeBottomMostIndices: c3010000c2010000c1010000c0010000
+  faceLandmarkListAnnotationName: FaceLandmarkList Annotation
+  leftIrisLandmarkListAnnotation: Left IrisLandmarkList Annotation
+  rightIrisLandmarkListAnnotation: Right IrisLandmarkList Annotation
+  trackedLeftIrisCenter: {fileID: 0}
+  trackedLeftEyeInner: {fileID: 0}
+  trackedLeftEyeOuter: {fileID: 0}
+  trackedLeftEyeTopPoints: []
+  trackedLeftEyeBottomPoints: []
+  trackedRightIrisCenter: {fileID: 0}
+  trackedRightEyeInner: {fileID: 0}
+  trackedRightEyeOuter: {fileID: 0}
+  trackedRightEyeTopPoints: []
+  trackedRightEyeBottomPoints: []
   leftEyeAngleRangeInOut: d2ffffff2f000000
   rightEyeAngleRangeInOut: 2f000000d2ffffff
   bothEyesAngleRangeUpDown: a6ffffff0d000000
@@ -1495,21 +1516,6 @@ MonoBehaviour:
   deadzoneInOut: 0.085
   angleMultiplierUpDown: -1.5
   angleMultiplierInOut: 1.7
-  maxHeadRotation: 35
-  intensityFactor: 1.5
-  smoothingFactor: 0.5
-  noseTop: {fileID: 0}
-  noseBottom: {fileID: 0}
-  leftIrisCenter: {fileID: 0}
-  leftEyeInner: {fileID: 0}
-  leftEyeOuter: {fileID: 0}
-  leftEyeTopPoints: []
-  leftEyeBottomPoints: []
-  rightIrisCenter: {fileID: 0}
-  rightEyeInner: {fileID: 0}
-  rightEyeOuter: {fileID: 0}
-  rightEyeTopPoints: []
-  rightEyeBottomPoints: []
 --- !u!137 &1145278805 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2132946940586443567, guid: 59af3253048b8488eb19e7d6bfcde52f,

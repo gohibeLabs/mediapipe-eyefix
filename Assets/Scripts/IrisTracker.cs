@@ -5,7 +5,7 @@
 // using PimDeWitte.UnityMainThreadDispatcher;
 //
 // /// <summary>
-// /// This class tracks iris movement and applies rotations to eyeballs accordingly.
+// /// OLD IRIS-FIX 3D points based implementation. This class tracks iris movement and applies rotations to eyeballs accordingly.
 // /// </summary>
 // public class IrisTracker : MonoBehaviour
 // {
@@ -343,11 +343,14 @@
 //     #endregion Methods
 // }
 
-using System.Collections.Generic;
+using System.Linq;
 using Arnab.Scripts;
 using UnityEngine;
 using PimDeWitte.UnityMainThreadDispatcher;
 
+/// <summary>
+/// This class tracks iris movement and applies rotations to eyeballs accordingly.
+/// </summary>
 public class IrisTracker : MonoBehaviour
 {
     #region Fields & References
@@ -359,6 +362,31 @@ public class IrisTracker : MonoBehaviour
     [SerializeField] private Transform leftEyeBone;
 
     [SerializeField] private Transform rightEyeBone;
+    
+    [SerializeField] private int leftEyeInnerMostIndex = 133;
+    [SerializeField] private int leftEyeOuterMostIndex = 33;
+    [SerializeField] private int[] leftEyeTopMostIndices = {107, 66, 105, 63};
+    [SerializeField] private int[] leftEyeBottomMostIndices = {231, 230, 229, 228};
+
+    [SerializeField] private int rightEyeInnerMostIndex = 362;
+    [SerializeField] private int rightEyeOuterMostIndex = 263;
+    [SerializeField] private int[] rightEyeTopMostIndices = {336, 296, 334, 293};
+    [SerializeField] private int[] rightEyeBottomMostIndices = {451, 450, 449, 448};
+    
+    [SerializeField] private string faceLandmarkListAnnotationName = "FaceLandmarkList Annotation";
+    [SerializeField] private string leftIrisLandmarkListAnnotation = "Left IrisLandmarkList Annotation";
+    [SerializeField] private string rightIrisLandmarkListAnnotation = "Right IrisLandmarkList Annotation";
+    
+    [SerializeField] private Transform trackedLeftIrisCenter;
+    [SerializeField] private Transform trackedLeftEyeInner;
+    [SerializeField] private Transform trackedLeftEyeOuter;
+    [SerializeField] private Transform[] trackedLeftEyeTopPoints;
+    [SerializeField] private Transform[] trackedLeftEyeBottomPoints;
+    [SerializeField] private Transform trackedRightIrisCenter;
+    [SerializeField] private Transform trackedRightEyeInner;
+    [SerializeField] private Transform trackedRightEyeOuter;
+    [SerializeField] private Transform[] trackedRightEyeTopPoints;
+    [SerializeField] private Transform[] trackedRightEyeBottomPoints;
 
     [SerializeField] [Range(-70, 70)] private int[] leftEyeAngleRangeInOut = {-38, 39};
 
@@ -371,15 +399,23 @@ public class IrisTracker : MonoBehaviour
     // Apply a small deadzone
     [SerializeField] [Range(-0.2f, 0.2f)] private float deadzoneInOut = 0.08f;
 
+    [SerializeField] private float trackingResponsivenessMultiplier = 35f;
+    
     [SerializeField] private float angleMultiplierUpDown = 60f;
 
     [SerializeField] private float angleMultiplierInOut = 78f;
-
-    public float maxHeadRotation = 35f;
-    public float intensityFactor = 1.5f; // Adjust this value to control overall intensity
-    public float smoothingFactor = 0.3f; // Adjust this value to control smoothing (0.1f to 0.5f)
-
-    private float previousNormalizedPos;
+    
+    private Transform _facePoints2DTransform;
+    private Transform _leftIrisPoints2DTransform;
+    private Transform _rightIrisPoints2DTransform;
+    
+    private Transform _currentLeftEyeNearestTopPoint;
+    private Transform _currentLeftEyeNearestBottomPoint;
+    
+    private Transform _currentRightEyeNearestTopPoint;
+    private Transform _currentRightEyeNearestBottomPoint;
+    
+    private DataStructures.FacialIrisTrackPointIndices FaceIris2DPoints { get; set; }
     
     private Vector3 _noseTopPos;
 
@@ -391,13 +427,91 @@ public class IrisTracker : MonoBehaviour
 
     private void Awake()
     {
+        // Make tracking as smooth as the screen's refresh rate.
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
     }
 
-    public void TrackIrisMovement(DataStructures.FacialIrisTrackPointIndices face2DPoints)
+    private void FixedUpdate()
+    {
+        if (_facePoints2DTransform == null)
+        {
+            InitializeIris2DData();
+            return;
+        }
+        
+        if (_facePoints2DTransform.childCount < 0) return;
+        if (_leftIrisPoints2DTransform.childCount < 0) return;
+        if (_rightIrisPoints2DTransform.childCount < 0) return;
+
+        SetFacial2DPoints();
+
+        TrackIrisMovement(FaceIris2DPoints);
+    }
+
+    private void InitializeIris2DData()
+    {
+        var facePoints = GameObject.Find(faceLandmarkListAnnotationName);
+        var leftIrisPoints = GameObject.Find(leftIrisLandmarkListAnnotation);
+        var rightIrisPoints = GameObject.Find(rightIrisLandmarkListAnnotation);
+        
+        if (!facePoints || !leftIrisPoints || !rightIrisPoints)
+            return;
+        
+        // Get "Point List Annotation", residing under "FaceLandmarkListWithIris Annotation" prefab -> As first child under "FaceLandmarkList Annotation".
+        _facePoints2DTransform = facePoints.transform.GetChild(0);
+        
+        // Get "Point List Annotation", residing under "FaceLandmarkListWithIris Annotation" prefab -> As first child under "Left IrisLandmarkList Annotation".
+        _leftIrisPoints2DTransform = leftIrisPoints.transform.GetChild(0);
+        
+        // Get "Point List Annotation", residing under "FaceLandmarkListWithIris Annotation" prefab -> As first child under "Right IrisLandmarkList Annotation".
+        _rightIrisPoints2DTransform = rightIrisPoints.transform.GetChild(0);
+
+        FaceIris2DPoints = new DataStructures.FacialIrisTrackPointIndices
+        {
+            LeftIrisData = default,
+            RightIrisData = default
+        };
+    }
+    
+    private void SetFacial2DPoints()
+    {
+        var leftEyeTopPoints = leftEyeTopMostIndices.Select(point => _facePoints2DTransform.GetChild(point)).ToList();
+        var leftEyeBottomPoints = leftEyeBottomMostIndices.Select(point => _facePoints2DTransform.GetChild(point)).ToList();
+            
+        var rightEyeTopPoints = rightEyeTopMostIndices.Select(point => _facePoints2DTransform.GetChild(point)).ToList();
+        var rightEyeBottomPoints = rightEyeBottomMostIndices.Select(point => _facePoints2DTransform.GetChild(point)).ToList();
+
+        var leftIris2DData = new DataStructures.EyeLandMarkData
+        {
+            IrisCenter = _leftIrisPoints2DTransform.GetChild(0),
+            InnerMost = _facePoints2DTransform.GetChild(leftEyeInnerMostIndex),
+            OuterMost = _facePoints2DTransform.GetChild(leftEyeOuterMostIndex),
+            TopMostPoints = leftEyeTopPoints.ToArray(),
+            BottomMostPoints = leftEyeBottomPoints.ToArray()
+        };
+            
+        var rightIris2DData = new DataStructures.EyeLandMarkData
+        {
+            IrisCenter = _rightIrisPoints2DTransform.GetChild(0),
+            InnerMost = _facePoints2DTransform.GetChild(rightEyeInnerMostIndex),
+            OuterMost = _facePoints2DTransform.GetChild(rightEyeOuterMostIndex),
+            TopMostPoints = rightEyeTopPoints.ToArray(),
+            BottomMostPoints = rightEyeBottomPoints.ToArray()
+        };
+
+        FaceIris2DPoints = new DataStructures.FacialIrisTrackPointIndices
+        {
+            LeftIrisData = leftIris2DData,
+            RightIrisData = rightIris2DData
+        };
+    }
+
+    private void TrackIrisMovement(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
         UnityMainThreadDispatcher.Instance().Enqueue(() =>
         {
@@ -405,77 +519,10 @@ public class IrisTracker : MonoBehaviour
         });
     }
 
-    // private void ApplyEyeRotations(DataStructures.EyeLandMarkData leftEyeData, DataStructures.EyeLandMarkData rightEyeData,
-    //     Vector3 noseTopPos, Vector3 noseBottomPos)
-    // {
-    //     var (_, _, horizontalSign, _) = CalculateTiltFactors(noseTopPos, noseBottomPos,
-    //         leftEyeData.OuterMost, rightEyeData.OuterMost);
-    //
-    //     var lookingRightSide = horizontalSign > 0;
-    //
-    //     var trackedEye = lookingRightSide ? leftEyeBone : rightEyeBone;
-    //     var trackedEyeData = lookingRightSide ? leftEyeData : rightEyeData;
-    //     var trackedEyeAngleMaxRange = lookingRightSide ? leftEyeAngleRangeInOut : rightEyeAngleRangeInOut;
-    //
-    //     var followingEye = lookingRightSide ? rightEyeBone : leftEyeBone;
-    //     var followingEyeAngleMaxRange = lookingRightSide ? rightEyeAngleRangeInOut : leftEyeAngleRangeInOut;
-    //
-    //     Vector2 irisCenter2D = new Vector2(trackedEyeData.IrisCenter.x, trackedEyeData.IrisCenter.z);
-    //     Vector2 innerPoint2D = new Vector2(trackedEyeData.InnerMost.x, trackedEyeData.InnerMost.z);
-    //     Vector2 outerPoint2D = new Vector2(trackedEyeData.OuterMost.x, trackedEyeData.OuterMost.z);
-    //
-    //     float headYRotation = headBone.localRotation.eulerAngles.y;
-    //     headYRotation = (headYRotation > 180) ? headYRotation - 360 : headYRotation;
-    //
-    //     float trackedEyeAngle = GetIrisBasedAngle(irisCenter2D, innerPoint2D, outerPoint2D, lookingRightSide ? -1f : 1f, headYRotation);
-    //
-    //     // Calculate half offset
-    //     float halfOffset = leftEyeOffsetFromRightEye / 2f;
-    //
-    //     // Apply rotation with half offset to tracked eye
-    //     ApplyEyeRotation(trackedEye, trackedEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), trackedEyeAngleMaxRange);
-    //
-    //     // Calculate following eye angle with full offset
-    //     float followingEyeAngle = trackedEyeAngle + (lookingRightSide ? leftEyeOffsetFromRightEye : -leftEyeOffsetFromRightEye);
-    //
-    //     // Apply rotation with half offset to following eye
-    //     ApplyEyeRotation(followingEye, followingEyeAngle - (lookingRightSide ? halfOffset : -halfOffset), followingEyeAngleMaxRange);
-    // }
-
-    public Transform noseTop;
-    public Transform noseBottom;
-    public Transform leftIrisCenter;
-    public Transform leftEyeInner;
-    public Transform leftEyeOuter;
-    // public Transform leftEyeTop;
-    // public Transform leftEyeBottom;
-    public Transform[] leftEyeTopPoints;
-    public Transform[] leftEyeBottomPoints;
-    public Transform rightIrisCenter;
-    public Transform rightEyeInner;
-    public Transform rightEyeOuter;
-    // public Transform rightEyeTop;
-    // public Transform rightEyeBottom;
-    public Transform[] rightEyeTopPoints;
-    public Transform[] rightEyeBottomPoints;
-
-    private Transform _currentLeftEyeNearestTopPoint;
-    private Transform _currentLeftEyeNearestBottomPoint;
-    
-    private Transform _currentRightEyeNearestTopPoint;
-    private Transform _currentRightEyeNearestBottomPoint;
-
     private void DebugShowPoints(DataStructures.FacialIrisTrackPointIndices face2DPoints)
     {
-        var noseTopPos = face2DPoints.FaceNoseTopPos;
-        var noseBottomPos = face2DPoints.FaceNoseBottomPos;
         var leftEyeData = face2DPoints.LeftIrisData;
         var rightEyeData = face2DPoints.RightIrisData;
-
-        if (!noseTopPos.GetComponent<MeshRenderer>().enabled)
-            noseTopPos.GetComponent<MeshRenderer>().enabled = true;
-        if (!noseBottomPos.GetComponent<MeshRenderer>().enabled)
-            noseBottomPos.GetComponent<MeshRenderer>().enabled = true;
         
         if (!leftEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled)
             leftEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled = true;
@@ -494,10 +541,6 @@ public class IrisTracker : MonoBehaviour
             if (!point.GetComponent<MeshRenderer>().enabled)
                 point.GetComponent<MeshRenderer>().enabled = true;
         }
-        // if (!leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
-        //     leftEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
-        // if (!leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
-        //     leftEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
         
         if (!rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled)
             rightEyeData.IrisCenter.GetComponent<MeshRenderer>().enabled = true;
@@ -516,30 +559,27 @@ public class IrisTracker : MonoBehaviour
             if (!point.GetComponent<MeshRenderer>().enabled)
                 point.GetComponent<MeshRenderer>().enabled = true;
         }
-        // if (!rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled)
-        //     rightEyeData.TopMost.GetComponent<MeshRenderer>().enabled = true;
-        // if (!rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled)
-        //     rightEyeData.BottomMost.GetComponent<MeshRenderer>().enabled = true;
     }
 
     private void GetNearestVerticalPoints()
     {
-        if (leftIrisCenter)
+        if (trackedLeftIrisCenter)
         {
-            _currentLeftEyeNearestTopPoint = GetClosest(leftIrisCenter.position, leftEyeTopPoints);
-            _currentLeftEyeNearestBottomPoint = GetClosest(leftIrisCenter.position, leftEyeBottomPoints);
+            _currentLeftEyeNearestTopPoint = GetClosest(trackedLeftIrisCenter.position, trackedLeftEyeTopPoints);
+            _currentLeftEyeNearestBottomPoint = GetClosest(trackedLeftIrisCenter.position, trackedLeftEyeBottomPoints);
         }
 
-        if (rightIrisCenter)
+        if (trackedRightIrisCenter)
         {
-            _currentRightEyeNearestTopPoint = GetClosest(rightIrisCenter.position, rightEyeTopPoints);
-            _currentRightEyeNearestBottomPoint = GetClosest(rightIrisCenter.position, rightEyeBottomPoints);
+            _currentRightEyeNearestTopPoint = GetClosest(trackedRightIrisCenter.position, trackedRightEyeTopPoints);
+            _currentRightEyeNearestBottomPoint = GetClosest(trackedRightIrisCenter.position, trackedRightEyeBottomPoints);
         }
     }
 
     private static Transform GetClosest(Vector3 startPosition, Transform[] points)
     {
         Transform bestTarget = null;
+        
         var closestDistanceSqr = Mathf.Infinity;
 
         foreach (var potentialTarget in points)
@@ -561,38 +601,27 @@ public class IrisTracker : MonoBehaviour
     {
         DebugShowPoints(face2DPoints);
         
-        var noseTopPos = face2DPoints.FaceNoseTopPos;
-        var noseBottomPos = face2DPoints.FaceNoseBottomPos;
         var leftEyeData = face2DPoints.LeftIrisData;
         var rightEyeData = face2DPoints.RightIrisData;
         
-        noseTop = noseTopPos;
-        noseBottom = noseBottomPos;
+        trackedLeftIrisCenter = leftEyeData.IrisCenter;
+        trackedLeftEyeInner = leftEyeData.InnerMost;
+        trackedLeftEyeOuter = leftEyeData.OuterMost;
+        trackedLeftEyeTopPoints = leftEyeData.TopMostPoints;
+        trackedLeftEyeBottomPoints = leftEyeData.BottomMostPoints;
         
-        leftIrisCenter = leftEyeData.IrisCenter;
-        leftEyeInner = leftEyeData.InnerMost;
-        leftEyeOuter = leftEyeData.OuterMost;
-        // leftEyeTop = leftEyeData.TopMost;
-        // leftEyeBottom = leftEyeData.BottomMost;
-        leftEyeTopPoints = leftEyeData.TopMostPoints;
-        leftEyeBottomPoints = leftEyeData.BottomMostPoints;
-        
-        rightIrisCenter = rightEyeData.IrisCenter;
-        rightEyeInner = rightEyeData.InnerMost;
-        rightEyeOuter = rightEyeData.OuterMost;
-        // rightEyeTop = rightEyeData.TopMost;
-        // rightEyeBottom = rightEyeData.BottomMost;
-        rightEyeTopPoints = rightEyeData.TopMostPoints;
-        rightEyeBottomPoints = rightEyeData.BottomMostPoints;
+        trackedRightIrisCenter = rightEyeData.IrisCenter;
+        trackedRightEyeInner = rightEyeData.InnerMost;
+        trackedRightEyeOuter = rightEyeData.OuterMost;
+        trackedRightEyeTopPoints = rightEyeData.TopMostPoints;
+        trackedRightEyeBottomPoints = rightEyeData.BottomMostPoints;
 
         GetNearestVerticalPoints();
 
-        var leftEyeAngle = GetIrisBasedAngle(leftIrisCenter.position, leftEyeInner.position, leftEyeOuter.position,
+        var leftEyeAngle = GetIrisBasedAngle(trackedLeftIrisCenter.position, trackedLeftEyeInner.position, trackedLeftEyeOuter.position,
             _currentLeftEyeNearestTopPoint.position, _currentLeftEyeNearestBottomPoint.position);
-        var rightEyeAngle = GetIrisBasedAngle(rightIrisCenter.position, rightEyeInner.position, rightEyeOuter.position,
-            _currentLeftEyeNearestTopPoint.position, _currentRightEyeNearestBottomPoint.position);
-        
-        print($"normalizedVertical left: {leftEyeAngle.y}");
+        var rightEyeAngle = GetIrisBasedAngle(trackedRightIrisCenter.position, trackedRightEyeInner.position, trackedRightEyeOuter.position,
+            _currentRightEyeNearestTopPoint.position, _currentRightEyeNearestBottomPoint.position);
         
         rightEyeAngle.y = leftEyeAngle.y;
 
@@ -628,7 +657,7 @@ public class IrisTracker : MonoBehaviour
         var verticalAngle = Mathf.Lerp(angleRangeVertical[0], angleRangeVertical[1], (normalizedAngle.y + 1f) / 2f);
     
         var targetRotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0f);
-        eyeBone.localRotation = Quaternion.Slerp(eyeBone.localRotation, targetRotation, Time.deltaTime * 15f);
+        eyeBone.localRotation = Quaternion.Slerp(eyeBone.localRotation, targetRotation, Time.deltaTime * trackingResponsivenessMultiplier);
     }
 
     #endregion Methods
