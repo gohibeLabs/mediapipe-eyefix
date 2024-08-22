@@ -936,42 +936,42 @@ PrefabInstance:
     - target: {fileID: 5158692485022354238, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485022354238, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485022354238, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1077
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485022354238, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -11.799999
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485785395896, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485785395896, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485785395896, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 939
       objectReference: {fileID: 0}
     - target: {fileID: 5158692485785395896, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -11.799999
       objectReference: {fileID: 0}
     - target: {fileID: 8571076842338426121, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
@@ -981,7 +981,7 @@ PrefabInstance:
     - target: {fileID: 8571076842338426121, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8571076842338426122, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
@@ -1208,22 +1208,22 @@ PrefabInstance:
     - target: {fileID: 8571076844286272849, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8571076844286272849, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8571076844286272849, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1878
       objectReference: {fileID: 0}
     - target: {fileID: 8571076844286272849, guid: 140d1d2c406167c50819d89f86d9092e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -18.349998
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 140d1d2c406167c50819d89f86d9092e, type: 3}
@@ -1240,6 +1240,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8571076842648159878}
     m_Modifications:
+    - target: {fileID: 3259285889726014649, guid: 5713b959e3c77a58fb258133fc8e4aef,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3259285889726014650, guid: 5713b959e3c77a58fb258133fc8e4aef,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1485,20 +1490,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8662b068ccda4264b5957f20dafeff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headBone: {fileID: 8643892706234282813}
   leftEyeBone: {fileID: 7239528559178966543}
   rightEyeBone: {fileID: 5305259353775361222}
-  LeftEyeInnerMostIndex: 133
-  LeftEyeOuterMostIndex: 33
-  _leftEyeTopMostIndices: 6b00000042000000690000003f000000
-  _leftEyeBottomMostIndices: e7000000e6000000e5000000e4000000
-  RightEyeInnerMostIndex: 362
-  RightEyeOuterMostIndex: 263
-  _rightEyeTopMostIndices: 50010000280100004e01000025010000
-  _rightEyeBottomMostIndices: c3010000c2010000c1010000c0010000
+  showDebugVisualizePoints: 1
+  annotatableScreenName: Annotatable Screen
   faceLandmarkListAnnotationName: FaceLandmarkList Annotation
   leftIrisLandmarkListAnnotation: Left IrisLandmarkList Annotation
   rightIrisLandmarkListAnnotation: Right IrisLandmarkList Annotation
+  leftEyeInnerMostIndex: 133
+  leftEyeOuterMostIndex: 33
+  leftEyeTopMostIndices: 6b00000042000000690000003f000000
+  leftEyeBottomMostIndices: e7000000e6000000e5000000e4000000
+  rightEyeInnerMostIndex: 362
+  rightEyeOuterMostIndex: 263
+  rightEyeTopMostIndices: 50010000280100004e01000025010000
+  rightEyeBottomMostIndices: c3010000c2010000c1010000c0010000
+  eyeAngleRangeInOut: 3c000000c4ffffff
+  eyeAngleRangeUpDown: a6ffffff1e000000
+  eyeCenterKappaNormalizedOffset: 0.193
+  trackingResponsivenessMultiplier: 35
+  angleMultiplierUpDown: 1.6
+  angleMultiplierInOut: 1.6
   trackedLeftIrisCenter: {fileID: 0}
   trackedLeftEyeInner: {fileID: 0}
   trackedLeftEyeOuter: {fileID: 0}
@@ -1509,13 +1521,6 @@ MonoBehaviour:
   trackedRightEyeOuter: {fileID: 0}
   trackedRightEyeTopPoints: []
   trackedRightEyeBottomPoints: []
-  leftEyeAngleRangeInOut: d2ffffff2f000000
-  rightEyeAngleRangeInOut: 2f000000d2ffffff
-  bothEyesAngleRangeUpDown: a6ffffff0d000000
-  leftEyeOffsetFromRightEye: -0.2
-  deadzoneInOut: 0.085
-  angleMultiplierUpDown: -1.5
-  angleMultiplierInOut: 1.7
 --- !u!137 &1145278805 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2132946940586443567, guid: 59af3253048b8488eb19e7d6bfcde52f,
@@ -1921,8 +1926,8 @@ Camera:
   m_GameObject: {fileID: 1969388814}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.104826115, g: 0.0977661, b: 0.122641504, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2073,7 +2078,7 @@ PrefabInstance:
     - target: {fileID: 3951304242052133043, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3951304242052133043, guid: 59af3253048b8488eb19e7d6bfcde52f,
         type: 3}
@@ -2729,12 +2734,6 @@ RectTransform:
 --- !u!1 &8643892706234282812 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3866931742885030211, guid: 59af3253048b8488eb19e7d6bfcde52f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4782646267672468095}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8643892706234282813 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7146606496219205185, guid: 59af3253048b8488eb19e7d6bfcde52f,
     type: 3}
   m_PrefabInstance: {fileID: 4782646267672468095}
   m_PrefabAsset: {fileID: 0}

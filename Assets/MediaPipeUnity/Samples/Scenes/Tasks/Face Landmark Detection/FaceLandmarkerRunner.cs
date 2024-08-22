@@ -99,16 +99,14 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
                 switch (taskApi.runningMode)
                 {
                     case Mediapipe.Tasks.Vision.Core.RunningMode.IMAGE:
-                        if (taskApi.TryDetect(image, imageProcessingOptions, ref result))
-                            faceLandmarkerResultAnnotationController.DrawNow(result);
-                        else
-                            faceLandmarkerResultAnnotationController.DrawNow(default);
+                        faceLandmarkerResultAnnotationController.DrawNow(
+                            taskApi.TryDetect(image, imageProcessingOptions, ref result) ? result : default);
                         break;
                     case Mediapipe.Tasks.Vision.Core.RunningMode.VIDEO:
-                        if (taskApi.TryDetectForVideo(image, GetCurrentTimestampMillisec(), imageProcessingOptions, ref result))
-                            faceLandmarkerResultAnnotationController.DrawNow(result);
-                        else
-                            faceLandmarkerResultAnnotationController.DrawNow(default);
+                        faceLandmarkerResultAnnotationController.DrawNow(taskApi.TryDetectForVideo(image,
+                            GetCurrentTimestampMillisec(), imageProcessingOptions, ref result)
+                            ? result
+                            : default);
                         break;
                     case Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM:
                         taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
@@ -130,7 +128,10 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
             var data = result.faceBlendshapes[0];
             ExpressionApplier.Instance.ApplyDataOnFace(data);
             ExpressionApplier.Instance.SetFaceRotation(result.facialTransformationMatrixes);
+            
+            // NOTE: We no longer need to call iris tracking from here, as it's now internally done within IrisTracker class iteslf.
             // IrisTracker.Instance.TrackIrisMovement(result.faceLandmarks);
+            
             //foreach(Category cat in data.categories)
             //{
             //    Debug.Log("BS " + cat.categoryName + " Score = " + (cat.score * 100));

@@ -362,6 +362,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4366494465079868236, guid: f0ce15b9d7f5f910fa2e3ddc2ea6d890,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366494465079868236, guid: f0ce15b9d7f5f910fa2e3ddc2ea6d890,
+        type: 3}
       propertyPath: m_Parameters.colorGradient.key0.b
       value: 1
       objectReference: {fileID: 0}
@@ -485,6 +490,11 @@ PrefabInstance:
       propertyPath: _color.g
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6589080662169022602, guid: f0ce15b9d7f5f910fa2e3ddc2ea6d890,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8525746990267350913, guid: f0ce15b9d7f5f910fa2e3ddc2ea6d890,
         type: 3}
       propertyPath: radius
@@ -531,7 +541,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 8572875197927310663}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98e622123dd1b9ac1a87d8609ce21d37, type: 3}
   m_Name: 
