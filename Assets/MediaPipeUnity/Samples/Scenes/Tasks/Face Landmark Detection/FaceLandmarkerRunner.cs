@@ -5,23 +5,23 @@
 // https://opensource.org/licenses/MIT.
 
 using System.Collections;
-using Mediapipe;
-using Mediapipe.Tasks.Vision.FaceLandmarker;
-using Mediapipe.Unity;
-using Mediapipe.Unity.Sample;
-using Mediapipe.Unity.Sample.FaceLandmarkDetection;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Mediapipe.Tasks.Vision.FaceLandmarker;
+using PimDeWitte.UnityMainThreadDispatcher;
 
-namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
+namespace Mediapipe.Unity.Sample.FaceLandmarkDetection
 {
     public class FaceLandmarkerRunner : VisionTaskApiRunner<FaceLandmarker>
     {
-        [SerializeField] private FaceLandmarkerResultAnnotationController faceLandmarkerResultAnnotationController;
+        [SerializeField] private FaceLandmarkerResultAnnotationController faceLandMarkerResultAnnotationController;
 
-        private Mediapipe.Unity.Experimental.TextureFramePool _textureFramePool;
+        private Experimental.TextureFramePool _textureFramePool;
 
-        public readonly FaceLandmarkDetectionConfig Config = new();
+        public readonly FaceLandmarkDetectionConfig config = new();
+
+        private void Awake() =>
+            Application.targetFrameRate = UnityEngine.Screen.currentResolution.refreshRate;
 
         public override void Stop()
         {
@@ -32,18 +32,18 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
 
         protected override IEnumerator Run()
         {
-            Debug.Log($"Delegate = {Config.Delegate}");
-            Debug.Log($"Running Mode = {Config.RunningMode}");
-            Debug.Log($"NumFaces = {Config.NumFaces}");
-            Debug.Log($"MinFaceDetectionConfidence = {Config.MinFaceDetectionConfidence}");
-            Debug.Log($"MinFacePresenceConfidence = {Config.MinFacePresenceConfidence}");
-            Debug.Log($"MinTrackingConfidence = {Config.MinTrackingConfidence}");
-            Debug.Log($"OutputFaceBlendshapes = {Config.OutputFaceBlendshapes}");
-            Debug.Log($"OutputFacialTransformationMatrixes = {Config.OutputFacialTransformationMatrixes}");
+            Debug.Log($"Delegate = {config.Delegate}");
+            Debug.Log($"Running Mode = {config.RunningMode}");
+            Debug.Log($"NumFaces = {config.NumFaces}");
+            Debug.Log($"MinFaceDetectionConfidence = {config.MinFaceDetectionConfidence}");
+            Debug.Log($"MinFacePresenceConfidence = {config.MinFacePresenceConfidence}");
+            Debug.Log($"MinTrackingConfidence = {config.MinTrackingConfidence}");
+            Debug.Log($"OutputFaceBlendshapes = {config.OutputFaceBlendshapes}");
+            Debug.Log($"OutputFacialTransformationMatrixes = {config.OutputFacialTransformationMatrixes}");
 
-            yield return AssetLoader.PrepareAssetAsync(Config.ModelPath);
+            yield return AssetLoader.PrepareAssetAsync(config.ModelPath);
 
-            var options = Config.GetFaceLandmarkerOptions(Config.RunningMode == Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM ? OnFaceLandmarkDetectionOutput : null);
+            var options = config.GetFaceLandmarkerOptions(config.RunningMode == Tasks.Vision.Core.RunningMode.LIVE_STREAM ? OnFaceLandmarkDetectionOutput : null);
             taskApi = FaceLandmarker.CreateFromOptions(options);
             var imageSource = ImageSourceProvider.ImageSource;
 
@@ -57,21 +57,20 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
 
             // Use RGBA32 as the input format.
             // TODO: When using GpuBuffer, MediaPipe assumes that the input format is BGRA, so maybe the following code needs to be fixed.
-            _textureFramePool = new Mediapipe.Unity.Experimental.TextureFramePool(imageSource.textureWidth, imageSource.textureHeight);
+            _textureFramePool = new Experimental.TextureFramePool(imageSource.textureWidth, imageSource.textureHeight, TextureFormat.RGBA32, 10);
 
             // NOTE: The screen will be resized later, keeping the aspect ratio.
             screen.Initialize(imageSource);
 
-            SetupAnnotationController(faceLandmarkerResultAnnotationController, imageSource);
+            SetupAnnotationController(faceLandMarkerResultAnnotationController, imageSource);
 
             var transformationOptions = imageSource.GetTransformationOptions();
             var flipHorizontally = transformationOptions.flipHorizontally;
             var flipVertically = transformationOptions.flipVertically;
-            var imageProcessingOptions = new Mediapipe.Tasks.Vision.Core.ImageProcessingOptions(rotationDegrees: (int)transformationOptions.rotationAngle);
+            var imageProcessingOptions = new Tasks.Vision.Core.ImageProcessingOptions(rotationDegrees: (int)transformationOptions.rotationAngle);
 
             AsyncGPUReadbackRequest req = default;
-            var req1 = req;
-            var waitUntilReqDone = new WaitUntil(() => req1.done);
+            var waitUntilReqDone = new WaitUntil(() => req.done);
             var result = FaceLandmarkerResult.Alloc(options.numFaces);
 
             while (true)
@@ -98,17 +97,17 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
                 var image = textureFrame.BuildCPUImage();
                 switch (taskApi.runningMode)
                 {
-                    case Mediapipe.Tasks.Vision.Core.RunningMode.IMAGE:
-                        faceLandmarkerResultAnnotationController.DrawNow(
+                    case Tasks.Vision.Core.RunningMode.IMAGE:
+                        faceLandMarkerResultAnnotationController.DrawNow(
                             taskApi.TryDetect(image, imageProcessingOptions, ref result) ? result : default);
                         break;
-                    case Mediapipe.Tasks.Vision.Core.RunningMode.VIDEO:
-                        faceLandmarkerResultAnnotationController.DrawNow(taskApi.TryDetectForVideo(image,
+                    case Tasks.Vision.Core.RunningMode.VIDEO:
+                        faceLandMarkerResultAnnotationController.DrawNow(taskApi.TryDetectForVideo(image,
                             GetCurrentTimestampMillisec(), imageProcessingOptions, ref result)
                             ? result
                             : default);
                         break;
-                    case Mediapipe.Tasks.Vision.Core.RunningMode.LIVE_STREAM:
+                    case Tasks.Vision.Core.RunningMode.LIVE_STREAM:
                         taskApi.DetectAsync(image, GetCurrentTimestampMillisec(), imageProcessingOptions);
                         break;
                 }
@@ -129,14 +128,14 @@ namespace MediaPipeUnity.Samples.Scenes.Tasks.Face_Landmark_Detection
             ExpressionApplier.Instance.ApplyDataOnFace(data);
             ExpressionApplier.Instance.SetFaceRotation(result.facialTransformationMatrixes);
             
-            // NOTE: We no longer need to call iris tracking from here, as it's now internally done within IrisTracker class iteslf.
+            // NOTE: We no longer need to call iris tracking from here, as it's now internally done within IrisTracker class itself.
             // IrisTracker.Instance.TrackIrisMovement(result.faceLandmarks);
             
             //foreach(Category cat in data.categories)
             //{
             //    Debug.Log("BS " + cat.categoryName + " Score = " + (cat.score * 100));
             //}
-            faceLandmarkerResultAnnotationController.DrawLater(result);
+            UnityMainThreadDispatcher.Instance().Enqueue(() => faceLandMarkerResultAnnotationController.DrawLater(result));
         }
     }
 }

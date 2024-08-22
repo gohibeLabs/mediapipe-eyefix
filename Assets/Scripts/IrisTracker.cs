@@ -526,7 +526,6 @@ public class IrisTracker : MonoBehaviour
         {
             var lineRend = circle.GetComponent<LineRenderer>();
             lineRend.enabled = show;
-            lineRend.startWidth = lineRend.endWidth = 0.3f;
             circle.GetComponent<CircleAnnotation>().enabled = show;
         }
     }

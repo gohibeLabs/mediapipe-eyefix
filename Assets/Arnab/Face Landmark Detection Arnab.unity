@@ -682,6 +682,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5403310940259726731, guid: 2e1291ddc10af56d4be1551cc630d40b,
         type: 3}
+      propertyPath: _irisCircleWidth
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403310940259726731, guid: 2e1291ddc10af56d4be1551cc630d40b,
+        type: 3}
+      propertyPath: _faceConnectionWidth
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403310940259726731, guid: 2e1291ddc10af56d4be1551cc630d40b,
+        type: 3}
       propertyPath: _faceLandmarkColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -1465,7 +1475,7 @@ MonoBehaviour:
     type: 3}
   screen: {fileID: 1006057043}
   runningMode: 0
-  faceLandmarkerResultAnnotationController: {fileID: 1006057044}
+  faceLandMarkerResultAnnotationController: {fileID: 1006057044}
 --- !u!114 &1064799471
 MonoBehaviour:
   m_ObjectHideFlags: 0
