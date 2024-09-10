@@ -1,0 +1,445 @@
+{
+    "face": [
+        {
+            "name": "Face_BS_HI.RT_eyebrow_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eyebrow_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eyebrow_Inner_Up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eyebrow_outer_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eyebrow_inner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eyebrow_outer_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_Inner_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_outer_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_inner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eyebrow_outer_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eye_outer_corner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_upper_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_lower_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_upper_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_lower_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_eye_inner_corner_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eye_outer_corner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_upper_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_lower_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_upper_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_lower_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_eye_inner_corner_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_UP_Eye_Face_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_UP_Eye_Face_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.LT_Dn_Eye_Face_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.RT_Dn_Eye_Face_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Triangle",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Round_01",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Round_02",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Upturned",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Downturned",
+            "value": 100.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Almond_01",
+            "value": 0.0
+        },
+        {
+            "name": "Face_BS_HI.Eyeshape_Almond_02",
+            "value": 0.0
+        }
+    ],
+    "eyebrow": [],
+    "eyeLash": [
+        {
+            "name": "Eyelash_BS_HI.Lattino_Female_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Asian_Female_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.African_Female_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Asian_Male_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.African_Male_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Caucasian_Male_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_eye_outer_corner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_upper_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_lower_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_upper_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_lower_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_eye_inner_corner_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_eye_outer_corner_down_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_upper_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_lower_eye_open_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_upper_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_lower_eye_close_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_eye_inner_corner_up_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_UP_Eye_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_UP_Eye_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_Dn_Eye_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_Dn_Eye_Eyelashes_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_Eyelash_Big_Round_R_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_Eyelash_Big_Round_L_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_Eyelash_Small_Round_R_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.LT_Eyelash_Small_Round_L_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_Eyelash_Big_Round_R_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_Eyelash_Big_Round_L_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_Eyelash_Small_Round_R_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.RT_Eyelash_Small_Round_L_HI",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_Reze",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_Garou",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_Law",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_Deku",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_Nezuko",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Hi_Eyelashes_SJW",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lower_Lash_01",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lower_Lash_02",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Upper_Lash_01",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Upper_Lash_02",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Corner_Lash",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Triangle",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Round_01",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Round_02",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Upturned",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Downturned",
+            "value": 100.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Almond_01",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Lashshape_Almond_02",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Honkai",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.Pokemon",
+            "value": 0.0
+        },
+        {
+            "name": "Eyelash_BS_HI.CC_Sakura",
+            "value": 0.0
+        }
+    ],
+    "eye": [
+        {
+            "name": "Eye_BS.right_small",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.left_small",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.right_big",
+            "value": 59.5
+        },
+        {
+            "name": "Eye_BS.left_big",
+            "value": 59.099998474121097
+        },
+        {
+            "name": "Eye_BS.right_down",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.left_down",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.rigt_up",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.left_up",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.right_inn",
+            "value": 9.0
+        },
+        {
+            "name": "Eye_BS.left_inn",
+            "value": 9.0
+        },
+        {
+            "name": "Eye_BS.right_out",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.left_out",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_Law",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_Reze",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_Garou",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_Deku",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_Nezuko",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_out_SJW",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_Scale_H",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_Scale_V",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.Eye_Flat",
+            "value": 100.0
+        },
+        {
+            "name": "Eye_BS.Pokemon",
+            "value": 0.0
+        },
+        {
+            "name": "Eye_BS.CC_Sakura",
+            "value": 51.79999923706055
+        }
+    ]
+}
