@@ -63,6 +63,21 @@ public class EyeShapeManager : MonoBehaviour
                 break;
             }
         }
+
+        for(int i=0;i<faceMesh.sharedMesh.blendShapeCount;i++)
+        {
+            if (faceMesh.sharedMesh.GetBlendShapeName(i).ToLower().Contains("blink"))
+            {
+                faceMesh.SetBlendShapeWeight(i, 0);
+            }
+        }
+        for (int i = 0; i < eyelashMesh.sharedMesh.blendShapeCount; i++)
+        {
+            if (eyelashMesh.sharedMesh.GetBlendShapeName(i).ToLower().Contains("blink"))
+            {
+                eyelashMesh.SetBlendShapeWeight(i, 0);
+            }
+        }
     }
 }
 
