@@ -36,8 +36,8 @@ public class RenderingPipelineDefines
 	}
 
 	static PipelineType GetPipeline() {
-		if (GraphicsSettings.renderPipelineAsset != null) {
-			var srpType = GraphicsSettings.renderPipelineAsset.GetType().ToString();
+		if (GraphicsSettings.defaultRenderPipeline != null) {
+			var srpType = GraphicsSettings.defaultRenderPipeline.GetType().ToString();
 			if (srpType.Contains("HDRenderPipelineAsset"))
 				return PipelineType.HDPipeline;
 			else if (srpType.Contains("UniversalRenderPipelineAsset") || srpType.Contains("LightweightRenderPipelineAsset"))
